@@ -2,754 +2,701 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SyA Group · Sangüesa y Asociados</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SyA Group · Sangüesa y Asociados Chile</title>
 
-    {% tailwind_css %}
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.bunny.net/css?family=figtree:300,400,500,600,700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; }
-
-        body {
-            font-family: 'Figtree', sans-serif;
-            background: #f9fafb;
-            color: #1f2937;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .topo {
-            background-image:
-                repeating-radial-gradient(ellipse at 65% 50%, transparent 0, transparent 52px, rgba(255,255,255,0.03) 52px, rgba(255,255,255,0.03) 53px),
-                repeating-radial-gradient(ellipse at 65% 50%, transparent 0, transparent 90px, rgba(255,255,255,0.02) 90px, rgba(255,255,255,0.02) 91px);
-        }
-
-        .clip-hero { clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%); }
-        .clip-inv  { clip-path: polygon(0 4%, 100% 0, 100% 100%, 0 100%); }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes floatY {
-            0%, 100% { transform: translateY(0); }
-            50%       { transform: translateY(-10px); }
-        }
-        @keyframes pulseFab {
-            0%   { box-shadow: 0 0 0 0 rgba(255,140,66,0.55); }
-            70%  { box-shadow: 0 0 0 14px rgba(255,140,66,0); }
-            100% { box-shadow: 0 0 0 0 rgba(255,140,66,0); }
-        }
-        @keyframes typingDot {
-            0%, 60%, 100% { transform: translateY(0); opacity: .35; }
-            30%            { transform: translateY(-4px); opacity: 1; }
-        }
-        @keyframes chatSlideUp {
-            from { opacity: 0; transform: translateY(18px) scale(0.96); }
-            to   { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        @keyframes ctaSlide {
-            from { opacity: 0; transform: translateX(12px); }
-            to   { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes msgIn {
-            from { opacity: 0; transform: translateY(6px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes transferIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to   { opacity: 1; transform: scale(1); }
-        }
-
-        .anim-1 { animation: fadeUp .7s .00s cubic-bezier(.22,1,.36,1) both; }
-        .anim-2 { animation: fadeUp .7s .12s cubic-bezier(.22,1,.36,1) both; }
-        .anim-3 { animation: fadeUp .7s .24s cubic-bezier(.22,1,.36,1) both; }
-        .anim-4 { animation: fadeUp .7s .36s cubic-bezier(.22,1,.36,1) both; }
-        .float  { animation: floatY 5s ease-in-out infinite; }
-
-        #navbar {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 50;
-            transition: all .3s ease;
-            background: linear-gradient(to bottom, rgba(2,82,131,0.6) 0%, transparent 100%);
-        }
-        #navbar.scrolled {
-            background: rgba(2,82,131,0.97);
-            backdrop-filter: blur(14px);
-            box-shadow: 0 2px 20px rgba(0,0,0,0.2);
-        }
-        .nav-link {
-            font-size: .875rem; font-weight: 500;
-            color: rgba(255,255,255,0.7); text-decoration: none;
-            transition: color .2s ease;
-        }
-        .nav-link:hover { color: #fff; }
-
-        .service-card {
-            background: #fff; border-radius: 16px; padding: 28px;
-            border: 1px solid #f3f4f6; box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-            transition: transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s ease;
-            cursor: default;
-        }
-        .service-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(3,103,166,0.10); }
-        .service-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; transition: transform .3s ease; }
-        .service-card:hover .service-icon { transform: scale(1.1); }
-        .service-tag { font-size: .7rem; font-weight: 700; letter-spacing: .1em; padding: 3px 9px; border-radius: 6px; }
-        .service-title { font-size: .95rem; font-weight: 700; color: #025283; margin-bottom: 10px; }
-        .service-desc { font-size: .82rem; font-weight: 300; line-height: 1.65; color: #6b7280; }
-        .stat-card { padding: 28px; border-radius: 16px; background: #fff; border: 1px solid #f3f4f6; box-shadow: 0 1px 4px rgba(0,0,0,0.04); text-align: center; }
-        .stat-num { font-size: 2.5rem; font-weight: 800; margin-bottom: 8px; }
-        .stat-label { font-size: .82rem; font-weight: 300; color: #6b7280; line-height: 1.5; }
-
-        /* ── Chat Widget ─────────────────────── */
-        #chat-widget {
-            position: fixed; bottom: 1.5rem; right: 1.5rem;
-            z-index: 9999; display: flex; flex-direction: column;
-            align-items: flex-end; gap: 10px;
-            font-family: 'Figtree', sans-serif;
-        }
-
-        #chat-cta {
-            display: flex; align-items: center; gap: 10px;
-            background: #fff; border-radius: 14px; padding: 11px 15px;
-            box-shadow: 0 8px 28px rgba(0,0,0,.12), 0 1px 3px rgba(0,0,0,.06);
-            border: 1px solid #f0f0f0; cursor: pointer; max-width: 255px;
-            animation: ctaSlide .5s .8s cubic-bezier(.22,1,.36,1) both;
-            transition: transform .2s ease, box-shadow .2s ease;
-        }
-        #chat-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,.14); }
-        #chat-cta.hidden { display: none !important; }
-
-        #chat-window {
-            width: 360px; border-radius: 20px;
-            box-shadow: 0 24px 64px rgba(0,0,0,.18), 0 4px 16px rgba(0,0,0,.08);
-            overflow: hidden; border: 1px solid rgba(0,0,0,.06);
-            display: flex; flex-direction: column;
-            animation: chatSlideUp .3s cubic-bezier(.22,1,.36,1);
-        }
-        #chat-window.hidden { display: none !important; }
-
-        .chat-header {
-            background: linear-gradient(135deg, #013d62 0%, #025283 50%, #0367a6 100%);
-            padding: 14px 16px; display: flex; align-items: center;
-            justify-content: space-between; gap: 8px;
-        }
-        .chat-avatar {
-            width: 38px; height: 38px; border-radius: 50%;
-            background: rgba(255,255,255,0.12); border: 2px solid rgba(255,255,255,0.2);
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0; position: relative;
-        }
-        .chat-avatar-dot {
-            position: absolute; bottom: 0; right: 0;
-            width: 9px; height: 9px; background: #86bf30;
-            border-radius: 50%; border: 2px solid #025283;
-        }
-        .chat-header-btn {
-            background: rgba(255,255,255,0.1); border: none; border-radius: 50%;
-            width: 28px; height: 28px; display: flex; align-items: center;
-            justify-content: center; cursor: pointer; color: rgba(255,255,255,0.8);
-            font-size: .7rem; transition: background .15s ease, color .15s ease;
-        }
-        .chat-header-btn:hover { background: rgba(255,255,255,0.2); color: #fff; }
-
-        #chat-messages {
-            flex: 1; overflow-y: auto; padding: 14px 14px 6px;
-            background: #f4f7fb; min-height: 240px; max-height: 320px;
-            display: flex; flex-direction: column; gap: 10px;
-        }
-        #chat-messages::-webkit-scrollbar { width: 3px; }
-        #chat-messages::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 99px; }
-
-        .msg-row { animation: msgIn .25s ease both; }
-        .msg-bot {
-            background: #fff; border: 1px solid #e8ecf0;
-            border-radius: 4px 14px 14px 14px;
-            box-shadow: 0 1px 3px rgba(0,0,0,.05);
-            padding: 9px 13px; max-width: 84%;
-            font-size: .82rem; color: #1f2937; line-height: 1.55;
-        }
-        .msg-user {
-            background: linear-gradient(135deg, #024f7d 0%, #0367a6 100%);
-            border-radius: 14px 14px 4px 14px;
-            padding: 9px 13px; max-width: 84%;
-            font-size: .82rem; color: #fff; line-height: 1.55;
-            box-shadow: 0 2px 8px rgba(2,82,131,.22);
-        }
-        .msg-time { font-size: .6rem; color: #b0bec5; margin-top: 3px; }
-
-        .typing-dot { width: 5px; height: 5px; border-radius: 50%; background: #94a3b8; display: inline-block; }
-        .typing-dot:nth-child(1) { animation: typingDot 1.2s .0s infinite; }
-        .typing-dot:nth-child(2) { animation: typingDot 1.2s .18s infinite; }
-        .typing-dot:nth-child(3) { animation: typingDot 1.2s .36s infinite; }
-
-        .qr-chip {
-            display: inline-flex; align-items: center; gap: 5px;
-            font-size: .74rem; font-weight: 500; padding: 5px 12px;
-            border-radius: 99px; border: 1px solid #dbe4ee;
-            background: #fff; color: #025283; cursor: pointer;
-            transition: all .15s ease; white-space: nowrap;
-            font-family: 'Figtree', sans-serif;
-        }
-        .qr-chip:hover { background: #025283; border-color: #025283; color: #fff; transform: translateY(-1px); box-shadow: 0 3px 8px rgba(2,82,131,.2); }
-
-        .transfer-card {
-            background: linear-gradient(135deg, #f0f7ff 0%, #e8f4fd 100%);
-            border: 1px solid #bfdbfe; border-radius: 12px; padding: 14px 16px;
-            animation: transferIn .4s cubic-bezier(.22,1,.36,1);
-        }
-        .transfer-card-title {
-            font-size: .78rem; font-weight: 700; color: #025283;
-            margin-bottom: 10px; display: flex; align-items: center; gap: 6px;
-        }
-        .transfer-btn {
-            display: inline-flex; align-items: center; gap: 6px;
-            padding: 8px 16px; border-radius: 8px; font-size: .78rem;
-            font-weight: 600; cursor: pointer; border: none;
-            font-family: 'Figtree', sans-serif; transition: all .15s ease;
-        }
-        .transfer-btn-primary { background: #025283; color: #fff; }
-        .transfer-btn-primary:hover { background: #0367a6; transform: translateY(-1px); }
-        .transfer-btn-secondary { background: transparent; color: #6b7280; border: 1px solid #e5e7eb; }
-        .transfer-btn-secondary:hover { background: #f9fafb; }
-
-        .chat-input-area { padding: 10px 12px 12px; background: #fff; border-top: 1px solid #eef0f3; }
-        .chat-input-row { display: flex; align-items: center; gap: 8px; }
-        #chat-input {
-            flex: 1; padding: 9px 13px; border: 1.5px solid #e5e7eb;
-            border-radius: 10px; font-size: .8rem; font-family: 'Figtree', sans-serif;
-            color: #1f2937; background: #f8fafc; outline: none;
-            transition: border-color .2s, box-shadow .2s, background .2s;
-        }
-        #chat-input:focus { border-color: #0367a6; box-shadow: 0 0 0 3px rgba(3,103,166,.1); background: #fff; }
-        #chat-send {
-            width: 38px; height: 38px;
-            background: linear-gradient(135deg, #ff8c42, #e67a31);
-            border: none; border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; flex-shrink: 0;
-            transition: transform .15s ease, box-shadow .15s ease;
-        }
-        #chat-send:hover { transform: scale(1.07); box-shadow: 0 4px 12px rgba(255,140,66,.4); }
-        #chat-send:active { transform: scale(.97); }
-        .chat-powered { font-size: .6rem; color: #d1d5db; text-align: center; margin-top: 6px; }
-
-        #chat-button {
-            width: 52px; height: 52px;
-            background: linear-gradient(135deg, #ff8c42, #e67a31);
-            border-radius: 50%; display: flex; align-items: center;
-            justify-content: center; cursor: pointer;
-            box-shadow: 0 6px 20px rgba(255,140,66,.45);
-            animation: pulseFab 2.5s ease-out infinite;
-            transition: transform .2s ease;
-        }
-        #chat-button:hover { transform: scale(1.1); animation: none; box-shadow: 0 8px 26px rgba(255,140,66,.5); }
-    </style>
+  {% tailwind_css %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="{% static 'css/main.css' %}">
 </head>
 <body>
 
-<!-- Navbar -->
+{# ── NAVBAR ────────────────────────────────────────── #}
 <nav id="navbar">
-    <div style="max-width:80rem; margin:0 auto; padding:0 1.5rem;">
-        <div style="display:flex; justify-content:space-between; align-items:center; padding:1rem 0;">
-            <a href="#" style="display:flex; align-items:center; gap:10px; text-decoration:none;">
-                <div style="width:36px; height:36px; border-radius:10px; background:#ff8c42; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 12px rgba(255,140,66,.4);">
-                    <i class="fas fa-leaf" style="color:#fff; font-size:.85rem;"></i>
-                </div>
-                <span style="font-weight:700; font-size:1.05rem; color:#fff; letter-spacing:-.01em;">SyA <span style="font-weight:400; opacity:.7;">Group</span></span>
-            </a>
-            <div style="display:none;" id="nav-links-desktop">
-                <a href="#servicios" class="nav-link" style="margin-left:2rem;">Servicios</a>
-                <a href="#nosotros"  class="nav-link" style="margin-left:2rem;">Nosotros</a>
-                <a href="#impacto"   class="nav-link" style="margin-left:2rem;">Impacto</a>
-                <a href="#contacto"  class="nav-link" style="margin-left:2rem;">Contacto</a>
-            </div>
-            <a href="{% url 'login' %}" style="display:inline-flex; align-items:center; gap:7px; padding:8px 18px; border-radius:10px; background:#ff8c42; color:#fff; font-size:.85rem; font-weight:600; text-decoration:none; transition:all .2s ease; box-shadow:0 4px 14px rgba(255,140,66,.35);"
-               onmouseover="this.style.background='#e67a31'; this.style.transform='translateY(-1px)'"
-               onmouseout="this.style.background='#ff8c42'; this.style.transform='translateY(0)'">
-                <i class="fas fa-arrow-right-to-bracket"></i>Iniciar sesion
-            </a>
-        </div>
+  <div class="nav-inner">
+    <a href="#" class="logo">
+      <img src="{% static 'img/Logo.png' %}" alt="SyA Group Logo" style="height:50px;">
+    </a>
+    <div class="nav-links" id="nav-links-desktop">
+      <a href="#servicios">Servicios</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#equipo">Equipo</a>
+      <a href="#experiencia">Experiencia</a>
+      <a href="#certificaciones">Certificaciones</a>
+      <a href="#sedes">Sedes</a>
+      <a href="#contacto">Contacto</a>
     </div>
+    <a href="{% url 'login' %}" class="nav-cta">
+      <i class="fas fa-arrow-right-to-bracket" style="font-size:.75rem;"></i>
+      Acceso al Sistema
+    </a>
+  </div>
 </nav>
 
-<!-- Hero -->
-<section style="background:#025283; min-height:100vh; padding-top:5rem; position:relative; overflow:hidden;" class="topo clip-hero">
-    <div style="position:absolute; top:33%; right:0; width:600px; height:600px; border-radius:50%; background:radial-gradient(circle, rgba(4,128,204,0.15) 0%, transparent 65%); pointer-events:none;"></div>
-    <div style="position:absolute; bottom:0; left:0; width:280px; height:280px; border-radius:50%; background:radial-gradient(circle, rgba(255,140,66,0.1) 0%, transparent 70%); pointer-events:none;"></div>
-    <div style="max-width:80rem; margin:0 auto; padding:7rem 1.5rem 8rem; display:flex; flex-wrap:wrap; align-items:center; gap:3.5rem;">
-        <div style="flex:1; min-width:280px;">
-            <div class="anim-1" style="display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:99px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.08); font-size:.7rem; font-weight:600; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,0.65); margin-bottom:24px;">
-                <span style="width:6px; height:6px; border-radius:50%; background:#86bf30; animation:pulse 2s infinite; display:inline-block;"></span>
-                Fundada en 2003 · Mexico
-            </div>
-            <h1 class="anim-2" style="font-size:clamp(2.2rem,5vw,3.5rem); font-weight:800; color:#fff; line-height:1.1; letter-spacing:-.02em; margin-bottom:20px;">
-                Asesoria ambiental<br><span style="color:#ff8c42; font-weight:400; font-style:italic;">con proposito.</span>
-            </h1>
-            <p class="anim-3" style="font-size:1rem; font-weight:300; line-height:1.7; color:rgba(255,255,255,0.6); max-width:480px; margin-bottom:36px;">
-                Mas de 20 anos acompanando a empresas e instituciones en el cumplimiento normativo, gestion ambiental y desarrollo sostenible en Mexico y Latinoamerica.
-            </p>
-            <div class="anim-4" style="display:flex; flex-wrap:wrap; gap:12px;">
-                <a href="#servicios" style="display:inline-flex; align-items:center; gap:8px; padding:13px 24px; border-radius:11px; background:#ff8c42; color:#fff; font-size:.875rem; font-weight:700; text-decoration:none; transition:all .2s ease; box-shadow:0 6px 20px rgba(255,140,66,.4);"
-                   onmouseover="this.style.background='#e67a31'; this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#ff8c42'; this.style.transform='translateY(0)'">
-                    Nuestros servicios <i class="fas fa-arrow-right" style="font-size:.75rem;"></i>
-                </a>
-                <a href="#nosotros" style="display:inline-flex; align-items:center; gap:8px; padding:13px 24px; border-radius:11px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:#fff; font-size:.875rem; font-weight:600; text-decoration:none; transition:all .2s ease;"
-                   onmouseover="this.style.background='rgba(255,255,255,0.16)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'">
-                    Conoce SyA Group
-                </a>
-            </div>
-        </div>
-        <div class="float" style="display:flex; flex-direction:column; gap:14px; flex-shrink:0;">
-            <div style="width:260px; border-radius:18px; padding:22px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12); box-shadow:0 20px 40px rgba(0,0,0,0.2);">
-                <div style="width:42px; height:42px; border-radius:11px; background:#0367a6; display:flex; align-items:center; justify-content:center; margin-bottom:14px;"><i class="fas fa-seedling" style="color:#fff; font-size:.95rem;"></i></div>
-                <p style="font-weight:700; color:#fff; font-size:.9rem; margin-bottom:5px;">Gestion Ambiental</p>
-                <p style="font-size:.75rem; font-weight:300; color:rgba(255,255,255,0.5);">MIA · Auditorias · Licenciamiento</p>
-                <div style="display:flex; gap:6px; margin-top:14px;">
-                    <div style="height:4px; flex:1; border-radius:99px; background:#86bf30;"></div>
-                    <div style="height:4px; width:40px; border-radius:99px; background:rgba(255,255,255,0.15);"></div>
-                    <div style="height:4px; width:20px; border-radius:99px; background:rgba(255,255,255,0.08);"></div>
-                </div>
-            </div>
-            <div style="width:200px; margin-left:auto; border-radius:14px; padding:14px 16px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.12);">
-                <div style="display:flex; align-items:center; gap:10px;">
-                    <div style="width:36px; height:36px; border-radius:9px; background:#ff8c42; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><i class="fas fa-award" style="color:#fff; font-size:.8rem;"></i></div>
-                    <div><p style="font-size:.8rem; font-weight:700; color:#fff;">+20 anos</p><p style="font-size:.7rem; color:rgba(255,255,255,0.5);">de experiencia</p></div>
-                </div>
-            </div>
-        </div>
+{# ── HERO ──────────────────────────────────────────── #}
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-orb hero-orb--1"></div>
+  <div class="hero-orb hero-orb--2"></div>
+  <div class="hero-orb hero-orb--3"></div>
+
+  <div class="hero-content">
+    <div>
+      <div class="hero-eyebrow fade-up d1">
+        <span class="hero-eyebrow-dot"></span>
+        <span class="hero-eyebrow-text">Consultora Ambiental · Fundada 2003 · Chile</span>
+      </div>
+      <h1 class="fade-up d2">
+        Ciencia aplicada<br>al <em>entorno marino</em><br>y terrestre.
+      </h1>
+      <p class="hero-lead fade-up d3">
+        Sangüesa y Asociados entrega soluciones técnicas de excelencia en biología, química y
+        oceanografía — apoyando la toma de decisiones de empresas e instituciones con rigor científico.
+      </p>
+      <div class="hero-actions fade-up d4">
+        <a href="#servicios" class="btn-primary">
+          <i class="fas fa-microscope" style="font-size:.8rem;"></i>Ver servicios
+        </a>
+        <a href="#nosotros" class="btn-ghost">Quiénes somos</a>
+      </div>
     </div>
-    <div style="max-width:80rem; margin:0 auto; padding:0 1.5rem 8rem;">
-        <div style="display:grid; grid-template-columns:repeat(4, 1fr); background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.10); border-radius:16px; overflow:hidden; box-shadow:0 20px 40px rgba(0,0,0,0.15);">
-            <div style="padding:20px 24px; border-right:1px solid rgba(255,255,255,0.08);"><p style="font-size:1.6rem; font-weight:800; color:#fff;">Mexico</p><p style="font-size:.72rem; font-weight:300; color:rgba(255,255,255,0.45); margin-top:3px;">Sede principal</p></div>
-            <div style="padding:20px 24px; border-right:1px solid rgba(255,255,255,0.08);"><p style="font-size:1.6rem; font-weight:800; color:#fff;">+200</p><p style="font-size:.72rem; font-weight:300; color:rgba(255,255,255,0.45); margin-top:3px;">Proyectos entregados</p></div>
-            <div style="padding:20px 24px; border-right:1px solid rgba(255,255,255,0.08);"><p style="font-size:1.6rem; font-weight:800; color:#fff;">2003</p><p style="font-size:.72rem; font-weight:300; color:rgba(255,255,255,0.45); margin-top:3px;">Ano de fundacion</p></div>
-            <div style="padding:20px 24px;"><p style="font-size:1.6rem; font-weight:800; color:#fff;">Latam</p><p style="font-size:.72rem; font-weight:300; color:rgba(255,255,255,0.45); margin-top:3px;">Alcance regional</p></div>
+
+    <div class="hero-panel hero-right fade-up d5">
+      <div class="hero-panel-header">
+        <span class="hero-panel-dot" style="background:#ef4444;"></span>
+        <span class="hero-panel-dot" style="background:#f59e0b;"></span>
+        <span class="hero-panel-dot" style="background:#22c55e;"></span>
+        <span style="font-size:.72rem;color:rgba(255,255,255,0.3);letter-spacing:.1em;margin-left:8px;">ÁREAS DE OPERACIÓN</span>
+      </div>
+      <div class="hero-panel-body">
+        <div class="metric-row">
+          <div class="metric-box">
+            <div class="metric-num">+20</div>
+            <div class="metric-label">Años activos</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-num">3</div>
+            <div class="metric-label">Regiones</div>
+          </div>
         </div>
+        <div style="background:rgba(255,255,255,0.03);border-radius:10px;padding:16px;margin-bottom:14px;">
+          <div style="font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:12px;font-weight:600;">Especialidades</div>
+          <div class="service-pills">
+            <span class="service-pill"><i class="fas fa-water" style="font-size:.6rem;"></i>Marino</span>
+            <span class="service-pill"><i class="fas fa-flask" style="font-size:.6rem;"></i>Laboratorio</span>
+            <span class="service-pill"><i class="fas fa-fish" style="font-size:.6rem;"></i>Submarino</span>
+            <span class="service-pill"><i class="fas fa-tree" style="font-size:.6rem;"></i>Terrestre</span>
+            <span class="service-pill"><i class="fas fa-file-contract" style="font-size:.6rem;"></i>Gestión</span>
+            <span class="service-pill"><i class="fas fa-recycle" style="font-size:.6rem;"></i>Recuperación</span>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:12px;background:rgba(74,158,47,0.09);border:1px solid rgba(74,158,47,0.2);border-radius:8px;">
+          <div style="width:32px;height:32px;border-radius:50%;background:rgba(74,158,47,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <i class="fas fa-circle-check" style="color:#4a9e2f;font-size:.75rem;"></i>
+          </div>
+          <div>
+            <p style="font-size:.75rem;font-weight:500;color:#fff;margin-bottom:2px;">ETFA Acreditada</p>
+            <p style="font-size:.67rem;color:rgba(255,255,255,0.35);">Fiscalización Ambiental · SMA Chile</p>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div class="stats-bar">
+    <div class="stats-bar-inner">
+      <div class="stat-item"><div class="stat-num">2003</div><div class="stat-label">Año de fundación</div></div>
+      <div class="stat-item"><div class="stat-num">6</div><div class="stat-label">Áreas de servicio</div></div>
+      <div class="stat-item"><div class="stat-num">+5</div><div class="stat-label">Años PVA energéticos</div></div>
+      <div class="stat-item"><div class="stat-num">Latam</div><div class="stat-label">Alcance regional</div></div>
+    </div>
+  </div>
 </section>
 
-<!-- Servicios -->
-<section id="servicios" style="padding:6rem 0; background:#f9fafb;">
-    <div style="max-width:80rem; margin:0 auto; padding:0 1.5rem;">
-        <div style="margin-bottom:3.5rem;">
-            <div style="display:inline-flex; align-items:center; gap:8px; font-size:.68rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:#0367a6; margin-bottom:12px;"><span style="width:20px; height:1px; background:#0367a6; display:inline-block;"></span>Que hacemos</div>
-            <h2 style="font-size:clamp(1.8rem,4vw,2.8rem); font-weight:800; color:#025283; line-height:1.1; letter-spacing:-.02em;">Soluciones ambientales<br><span style="color:#ff8c42; font-weight:400; font-style:italic;">integrales.</span></h2>
-        </div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:16px;">
-            <div class="service-card"><div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:16px;"><div class="service-icon" style="background:rgba(2,82,131,0.08);"><i class="fas fa-map" style="color:#025283; font-size:.9rem;"></i></div><span class="service-tag" style="background:rgba(2,82,131,0.08); color:#025283;">MIA</span></div><p class="service-title">Manifestaciones de Impacto Ambiental</p><p class="service-desc">Elaboracion y tramitacion ante la SEMARNAT para proyectos de infraestructura, industria y desarrollo.</p></div>
-            <div class="service-card"><div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:16px;"><div class="service-icon" style="background:rgba(134,191,48,0.1);"><i class="fas fa-clipboard-check" style="color:#86bf30; font-size:.9rem;"></i></div><span class="service-tag" style="background:rgba(134,191,48,0.1); color:#86bf30;">ADA</span></div><p class="service-title">Auditorias y Diagnosticos Ambientales</p><p class="service-desc">Evaluacion del desempeno ambiental de instalaciones, identificando riesgos, pasivos y oportunidades.</p></div>
-            <div class="service-card"><div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:16px;"><div class="service-icon" style="background:rgba(3,103,166,0.08);"><i class="fas fa-file-contract" style="color:#0367a6; font-size:.9rem;"></i></div><span class="service-tag" style="background:rgba(3,103,166,0.08); color:#0367a6;">TLA</span></div><p class="service-title">Tramites de Licenciamiento Ambiental</p><p class="service-desc">Gestion integral ante autoridades federales, estatales y municipales para permisos y autorizaciones.</p></div>
-            <div class="service-card"><div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:16px;"><div class="service-icon" style="background:rgba(242,65,48,0.08);"><i class="fas fa-trash-can" style="color:#f24130; font-size:.9rem;"></i></div><span class="service-tag" style="background:rgba(242,65,48,0.08); color:#f24130;">GRP</span></div><p class="service-title">Gestion de Residuos Peligrosos</p><p class="service-desc">Planes de manejo y manifiestos conforme a las NOM vigentes para el correcto tratamiento de residuos.</p></div>
-            <div class="service-card"><div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:16px;"><div class="service-icon" style="background:rgba(4,128,204,0.08);"><i class="fas fa-flask" style="color:#0480cc; font-size:.9rem;"></i></div><span class="service-tag" style="background:rgba(4,128,204,0.08); color:#0480cc;">MMA</span></div><p class="service-title">Monitoreo y Muestreo Ambiental</p><p class="service-desc">Campanas de monitoreo de calidad del agua, suelo y aire con laboratorio acreditado para reportes.</p></div>
-            <div class="service-card"><div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:16px;"><div class="service-icon" style="background:rgba(255,140,66,0.1);"><i class="fas fa-chalkboard-user" style="color:#ff8c42; font-size:.9rem;"></i></div><span class="service-tag" style="background:rgba(255,140,66,0.1); color:#ff8c42;">CCE</span></div><p class="service-title">Capacitacion y Consultoria Estrategica</p><p class="service-desc">Programas en legislacion ambiental, sustentabilidad y gestion de riesgos para equipos operativos y directivos.</p></div>
-        </div>
+{# ── SERVICIOS ─────────────────────────────────────── #}
+<section id="servicios" class="services-section">
+  <div class="section-inner">
+    <div class="services-header">
+      <div>
+        <div class="section-label">Qué hacemos</div>
+        <h2>Portafolio de<br><em>servicios técnicos.</em></h2>
+      </div>
+      <p class="services-lead">
+        Seis disciplinas especializadas que cubren el ciclo completo de evaluación,
+        monitoreo y gestión ambiental en ecosistemas marinos y terrestres.
+      </p>
     </div>
+    <div class="services-grid">
+      <div class="svc-card">
+        <div class="svc-icon" style="background:rgba(10,77,110,0.08);"><i class="fas fa-water" style="color:#0e4d6e;font-size:.95rem;"></i></div>
+        <span class="svc-tag" style="background:rgba(10,77,110,0.08);color:#0e4d6e;">EMO</span>
+        <p class="svc-title">Estudios Marinos y Oceanográficos</p>
+        <p class="svc-desc">Monitoreo y análisis de cuerpos de agua, dinámicas marinas, corrientes y calidad de masa de agua en zonas costeras e insulares.</p>
+        <span class="svc-arrow">Ver más <i class="fas fa-arrow-right" style="font-size:.65rem;"></i></span>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon" style="background:rgba(10,124,138,0.08);"><i class="fas fa-flask" style="color:#0a7c8a;font-size:.95rem;"></i></div>
+        <span class="svc-tag" style="background:rgba(10,124,138,0.08);color:#0a7c8a;">LAB</span>
+        <p class="svc-title">Laboratorio de Ecología</p>
+        <p class="svc-desc">Análisis técnico y científico de muestras biológicas. Clasificación taxonómica, indicadores ecológicos y bioensayos de toxicidad.</p>
+        <span class="svc-arrow">Ver más <i class="fas fa-arrow-right" style="font-size:.65rem;"></i></span>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon" style="background:rgba(74,158,47,0.1);"><i class="fas fa-person-swimming" style="color:#4a9e2f;font-size:.95rem;"></i></div>
+        <span class="svc-tag" style="background:rgba(74,158,47,0.1);color:#4a9e2f;">OPS</span>
+        <p class="svc-title">Operaciones Submarinas</p>
+        <p class="svc-desc">Trabajos técnicos especializados bajo el agua: inspecciones de estructuras, censos bentónicos y recolección de muestras profundas.</p>
+        <span class="svc-arrow">Ver más <i class="fas fa-arrow-right" style="font-size:.65rem;"></i></span>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon" style="background:rgba(74,158,47,0.08);"><i class="fas fa-tree" style="color:#3d8a22;font-size:.95rem;"></i></div>
+        <span class="svc-tag" style="background:rgba(74,158,47,0.08);color:#3d8a22;">ETD</span>
+        <p class="svc-title">Estudios Terrestres y Dulceacuícolas</p>
+        <p class="svc-desc">Evaluación de ecosistemas terrestres, cuencas hidrográficas, ríos y lagos. Flora, fauna e hidrobiología continental.</p>
+        <span class="svc-arrow">Ver más <i class="fas fa-arrow-right" style="font-size:.65rem;"></i></span>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon" style="background:rgba(200,169,110,0.1);"><i class="fas fa-file-contract" style="color:#c8a96e;font-size:.95rem;"></i></div>
+        <span class="svc-tag" style="background:rgba(200,169,110,0.1);color:#c8a96e;">GAP</span>
+        <p class="svc-title">Gestión Ambiental y Permisos Sectoriales</p>
+        <p class="svc-desc">Tramitación y cumplimiento de normativa ambiental vigente. Asesoría integral en el Sistema de Evaluación de Impacto Ambiental (SEIA).</p>
+        <span class="svc-arrow">Ver más <i class="fas fa-arrow-right" style="font-size:.65rem;"></i></span>
+      </div>
+      <div class="svc-card">
+        <div class="svc-icon" style="background:rgba(232,66,10,0.08);"><i class="fas fa-recycle" style="color:#e8420a;font-size:.95rem;"></i></div>
+        <span class="svc-tag" style="background:rgba(232,66,10,0.08);color:#e8420a;">ORL</span>
+        <p class="svc-title">Operaciones de Recuperación y Limpieza</p>
+        <p class="svc-desc">Intervención en áreas impactadas por derrames de hidrocarburos u otros contaminantes. Planes de contingencia y restauración ecológica.</p>
+        <span class="svc-arrow">Ver más <i class="fas fa-arrow-right" style="font-size:.65rem;"></i></span>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Nosotros -->
-<section id="nosotros" style="padding:6rem 0; background:#025283; position:relative; overflow:hidden;" class="topo clip-inv">
-    <div style="position:absolute; inset:0; pointer-events:none; background:radial-gradient(ellipse at 80% 80%, rgba(255,140,66,0.08) 0%, transparent 60%);"></div>
-    <div style="max-width:80rem; margin:0 auto; padding:0 1.5rem; position:relative; z-index:1;">
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:4rem; align-items:center;">
-            <div>
-                <div style="display:inline-flex; align-items:center; gap:8px; font-size:.68rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:#ff8c42; margin-bottom:16px;"><span style="width:20px; height:1px; background:#ff8c42; display:inline-block;"></span>Quienes somos</div>
-                <h2 style="font-size:clamp(1.8rem,4vw,2.6rem); font-weight:800; color:#fff; line-height:1.1; letter-spacing:-.02em; margin-bottom:24px;">Sanguesa y<br><span style="color:#0480cc; font-weight:400; font-style:italic;">Asociados Limitada.</span></h2>
-                <div style="display:flex; flex-direction:column; gap:14px; font-size:.9rem; font-weight:300; line-height:1.7; color:rgba(255,255,255,0.6);">
-                    <p>Empresa mexicana fundada en 2003, especializada en asesorias y servicios ambientales tecnicos para los sectores industrial, energetico, agropecuario y de infraestructura.</p>
-                    <p>Mas de dos decadas desarrollando proyectos en todo el territorio nacional, conciliando el desarrollo economico con el cuidado del entorno natural.</p>
-                </div>
-                <div style="display:flex; flex-wrap:wrap; gap:8px; margin-top:24px;">
-                    <span style="font-size:.72rem; font-weight:500; padding:5px 13px; border-radius:99px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.14); color:rgba(255,255,255,0.65);">NOM Compliance</span>
-                    <span style="font-size:.72rem; font-weight:500; padding:5px 13px; border-radius:99px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.14); color:rgba(255,255,255,0.65);">SEMARNAT</span>
-                    <span style="font-size:.72rem; font-weight:500; padding:5px 13px; border-radius:99px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.14); color:rgba(255,255,255,0.65);">ISO 14001</span>
-                    <span style="font-size:.72rem; font-weight:500; padding:5px 13px; border-radius:99px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.14); color:rgba(255,255,255,0.65);">LGEEPA</span>
-                    <span style="font-size:.72rem; font-weight:500; padding:5px 13px; border-radius:99px; background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.14); color:rgba(255,255,255,0.65);">Sustentabilidad</span>
-                </div>
-            </div>
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
-                <div style="border-radius:16px; padding:20px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);"><i class="fas fa-microscope" style="font-size:1.4rem; margin-bottom:12px; display:block;"></i><p style="font-weight:700; color:#fff; font-size:.875rem; margin-bottom:6px;">Rigor tecnico</p><p style="font-size:.75rem; font-weight:300; line-height:1.6; color:rgba(255,255,255,0.45);">Metodologias validadas y profesionales certificados.</p></div>
-                <div style="border-radius:16px; padding:20px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);"><i class="fas fa-scale-balanced" style="font-size:1.4rem; margin-bottom:12px; display:block;"></i><p style="font-weight:700; color:#fff; font-size:.875rem; margin-bottom:6px;">Cumplimiento legal</p><p style="font-size:.75rem; font-weight:300; line-height:1.6; color:rgba(255,255,255,0.45);">Conocimiento profundo de la legislacion ambiental.</p></div>
-                <div style="border-radius:16px; padding:20px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);"><i class="fas fa-tree" style="font-size:1.4rem; margin-bottom:12px; display:block;"></i><p style="font-weight:700; color:#fff; font-size:.875rem; margin-bottom:6px;">Sostenibilidad</p><p style="font-size:.75rem; font-weight:300; line-height:1.6; color:rgba(255,255,255,0.45);">Equilibrio entre desarrollo economico y naturaleza.</p></div>
-                <div style="border-radius:16px; padding:20px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);"><i class="fas fa-handshake" style="font-size:1.4rem; margin-bottom:12px; display:block;"></i><p style="font-weight:700; color:#fff; font-size:.875rem; margin-bottom:6px;">Confianza</p><p style="font-size:.75rem; font-weight:300; line-height:1.6; color:rgba(255,255,255,0.45);">+20 anos siendo aliados estrategicos en Mexico.</p></div>
-            </div>
+{# ── NOSOTROS ──────────────────────────────────────── #}
+<section id="nosotros" class="about-section">
+  <div class="about-pattern"></div>
+  <div class="about-glow"></div>
+  <div class="section-inner about-inner">
+    <div class="about-text">
+      <div class="section-label about-label">Quiénes somos</div>
+      <h2>Sangüesa y<br><em>Asociados Limitada.</em></h2>
+      <p class="about-p">Sociedad chilena fundada en 2003, especializada en consultorías y servicios ambientales técnicos para los sectores industrial, energético, pesquero y de infraestructura.</p>
+      <p class="about-p">Nuestro equipo multidisciplinario — ingenieros, topógrafos, biólogos marinos y oceanógrafos — aporta experiencia previa en CORFO, MOP, SUBPESCA y el Ministerio del Medio Ambiente.</p>
+      <div class="pillars">
+        <div class="pillar">
+          <div class="pillar-icon"><i class="fas fa-user-tie" style="color:#4a9e2f;font-size:.8rem;"></i></div>
+          <div><p class="pillar-title">Trato personalizado y flexibilidad</p><p class="pillar-desc">Cada proyecto recibe atención directa y adaptada a las particularidades del cliente.</p></div>
         </div>
+        <div class="pillar">
+          <div class="pillar-icon"><i class="fas fa-shield-halved" style="color:#4a9e2f;font-size:.8rem;"></i></div>
+          <div><p class="pillar-title">Confidencialidad y calidad</p><p class="pillar-desc">Estrictos protocolos de manejo de información y control de calidad en todos los entregables.</p></div>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon"><i class="fas fa-microscope" style="color:#4a9e2f;font-size:.8rem;"></i></div>
+          <div><p class="pillar-title">Sólida experiencia técnica</p><p class="pillar-desc">Más de dos décadas desarrollando proyectos a lo largo de todo el territorio nacional.</p></div>
+        </div>
+      </div>
     </div>
+    <div>
+      <div class="about-cards">
+        <div class="about-card"><span class="about-card-icon"><i class="fas fa-microscope"></i></span><p class="about-card-title">Rigor científico</p><p class="about-card-body">Metodologías validadas y profesionales titulados en biología, química y oceanografía.</p></div>
+        <div class="about-card"><span class="about-card-icon"><i class="fas fa-scale-balanced"></i></span><p class="about-card-title">Cumplimiento legal</p><p class="about-card-body">Dominio profundo de la normativa ambiental chilena vigente, SEA y permisos sectoriales.</p></div>
+        <div class="about-card"><span class="about-card-icon"><i class="fas fa-leaf"></i></span><p class="about-card-title">Desarrollo sostenible</p><p class="about-card-body">Visión: ser una mirada eficiente para orientar el desarrollo sostenible de la industria.</p></div>
+        <div class="about-card"><span class="about-card-icon"><i class="fas fa-handshake"></i></span><p class="about-card-title">Alianza estratégica</p><p class="about-card-body">+20 años siendo socios confiables de empresas e instituciones en Chile.</p></div>
+      </div>
+      <div class="about-badge-row">
+        <span class="about-badge">SEIA</span><span class="about-badge">SUBPESCA</span><span class="about-badge">CONAF</span>
+        <span class="about-badge">ISO 14001</span><span class="about-badge">Ley Karin</span><span class="about-badge">SMA · ETFA</span><span class="about-badge">Sostenibilidad</span>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- Impacto -->
-<section id="impacto" style="padding:6rem 0; background:#fff;">
-    <div style="max-width:80rem; margin:0 auto; padding:0 1.5rem;">
-        <div style="text-align:center; margin-bottom:3.5rem;">
-            <div style="display:inline-flex; align-items:center; gap:8px; font-size:.68rem; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:#0367a6; margin-bottom:12px;"><span style="width:20px; height:1px; background:#0367a6;"></span>Nuestro alcance<span style="width:20px; height:1px; background:#0367a6;"></span></div>
-            <h2 style="font-size:clamp(1.8rem,4vw,2.8rem); font-weight:800; color:#025283; letter-spacing:-.02em;">Impacto que se mide.</h2>
-        </div>
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-bottom:4rem;">
-            <div class="stat-card" style="border-top:4px solid #025283;"><p class="stat-num" style="color:#025283;">+200</p><p class="stat-label">Proyectos ambientales completados en Mexico</p></div>
-            <div class="stat-card" style="border-top:4px solid #ff8c42;"><p class="stat-num" style="color:#ff8c42;">+80</p><p class="stat-label">Clientes activos en sectores industriales y publicos</p></div>
-            <div class="stat-card" style="border-top:4px solid #86bf30;"><p class="stat-num" style="color:#86bf30;">22</p><p class="stat-label">Anos de trayectoria ininterrumpida en el sector</p></div>
-            <div class="stat-card" style="border-top:4px solid #0367a6;"><p class="stat-num" style="color:#0367a6;">100%</p><p class="stat-label">Comprometidos con el cumplimiento normativo</p></div>
-        </div>
-        <div id="contacto" style="border-radius:24px; padding:4rem; text-align:center; background:#025283; position:relative; overflow:hidden; box-shadow:0 20px 60px rgba(2,82,131,0.25);" class="topo">
-            <div style="position:absolute; top:0; right:0; width:260px; height:260px; border-radius:50%; background:radial-gradient(circle, rgba(255,140,66,0.15) 0%, transparent 70%); transform:translate(30%,-30%); pointer-events:none;"></div>
-            <div style="position:relative; z-index:1;">
-                <h3 style="font-size:clamp(1.5rem,3vw,2.2rem); font-weight:800; color:#fff; letter-spacing:-.02em; margin-bottom:12px;">Tienes un proyecto ambiental?</h3>
-                <p style="font-size:.95rem; font-weight:300; color:rgba(255,255,255,0.6); margin-bottom:32px; max-width:480px; margin-left:auto; margin-right:auto; line-height:1.7;">Cuentanos tu caso. Un especialista te contactara sin costo ni compromiso.</p>
-                <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
-                    <a href="mailto:contacto@syagroup.com.mx" style="display:inline-flex; align-items:center; gap:8px; padding:13px 24px; border-radius:11px; background:#ff8c42; color:#fff; font-size:.875rem; font-weight:700; text-decoration:none; transition:all .2s ease;" onmouseover="this.style.background='#e67a31'" onmouseout="this.style.background='#ff8c42'"><i class="fas fa-envelope"></i>Enviar consulta</a>
-                    <a href="https://wa.me/521XXXXXXXXXX" style="display:inline-flex; align-items:center; gap:8px; padding:13px 24px; border-radius:11px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); color:#fff; font-size:.875rem; font-weight:600; text-decoration:none; transition:background .2s ease;" onmouseover="this.style.background='rgba(255,255,255,0.16)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'"><i class="fab fa-whatsapp"></i>WhatsApp</a>
-                </div>
-            </div>
-        </div>
+{# ── EQUIPO ────────────────────────────────────────── #}
+<section id="equipo" class="team-section">
+  <div class="team-accent-line"></div>
+  <div class="section-inner team-inner">
+    <div class="team-eyebrow"><span class="team-eyebrow-rule"></span>Nuestra gente</div>
+    <div class="team-head">
+      <div><h2>El equipo detrás<br>de <em>cada proyecto.</em></h2></div>
+      <p class="team-head-sub">Biólogos, oceanógrafos, ingenieros y gestores ambientales con trayectoria en el sector público y privado chileno desde 2003.</p>
     </div>
+    <div class="lead-grid">
+      <div class="lead-card lead-card--prime">
+        <span class="founder-pill">Fundador</span>
+        <span class="role-tag role-tag--gm"><i class="fas fa-user-tie"></i> Gerencia General</span>
+        <div class="lead-person-row">
+          <div class="lead-av lead-av--teal">AS</div>
+          <div><p class="lead-name">Álvaro Sangüesa N.</p><p class="lead-title">Gerente General · Socio Fundador</p></div>
+        </div>
+        <div class="lead-sep"></div>
+        <p class="lead-desc">Más de dos décadas dirigiendo proyectos ambientales estratégicos en ecosistemas marinos y terrestres a lo largo de todo el territorio nacional. Motor fundacional de SyA Group desde 2003.</p>
+        <div class="chip-row"><span class="chip">+20 años</span><span class="chip">Estudios Marinos</span><span class="chip">Gestión Ambiental</span></div>
+      </div>
+      <div class="lead-card">
+        <span class="role-tag role-tag--adm"><i class="fas fa-chart-line"></i> Administración</span>
+        <div class="lead-person-row">
+          <div class="lead-av lead-av--blue">CS</div>
+          <div><p class="lead-name">Carlos Sangüesa N.</p><p class="lead-title">Gerente de Administración y Finanzas</p></div>
+        </div>
+        <div class="lead-sep"></div>
+        <p class="lead-desc">Responsable de la estructura operativa y la sostenibilidad económica del grupo. Garantiza la eficiencia en la gestión de recursos y el crecimiento ordenado de la empresa.</p>
+        <div class="chip-row"><span class="chip">Finanzas</span><span class="chip">Operaciones</span></div>
+      </div>
+      <div class="lead-card">
+        <span class="role-tag role-tag--qly"><i class="fas fa-shield-halved"></i> Calidad</span>
+        <div class="lead-person-row">
+          <div class="lead-av lead-av--green">LA</div>
+          <div><p class="lead-name">Lorena Arriagada O.</p><p class="lead-title">Jefe de Proyectos · Encargada de Calidad</p></div>
+        </div>
+        <div class="lead-sep"></div>
+        <p class="lead-desc">Lidera la ejecución técnica y asegura el cumplimiento de estándares nacionales e internacionales. Referente en control de calidad y entrega de informes técnicos.</p>
+        <div class="chip-row"><span class="chip">ISO 14001</span><span class="chip">SEIA</span><span class="chip">ETFA</span></div>
+      </div>
+    </div>
+    <div class="spec-hd"><span class="spec-hd-label">Especialistas técnicos</span><div class="spec-hd-rule"></div></div>
+    <div class="spec-grid">
+      <div class="spec-card"><div class="spec-ico spec-ico--teal"><i class="fas fa-water"></i></div><p class="spec-name">Biología Marina y Oceanografía</p><p class="spec-desc">Ecosistemas acuáticos, dinámica costera y caracterización de masas de agua.</p></div>
+      <div class="spec-card"><div class="spec-ico spec-ico--green"><i class="fas fa-drafting-compass"></i></div><p class="spec-name">Ingeniería y Topografía</p><p class="spec-desc">Levantamiento de datos, modelamiento de terrenos y cartografía ambiental.</p></div>
+      <div class="spec-card"><div class="spec-ico spec-ico--amber"><i class="fas fa-file-contract"></i></div><p class="spec-name">Gestión Ambiental</p><p class="spec-desc">Cumplimiento normativo, tramitación de permisos sectoriales y asesoría SEIA.</p></div>
+      <div class="spec-card"><div class="spec-ico spec-ico--purple"><i class="fas fa-laptop-code"></i></div><p class="spec-name">Informática Aplicada</p><p class="spec-desc">Procesamiento de datos ambientales y herramientas tecnológicas de consultoría.</p></div>
+    </div>
+    <div class="inst-bar">
+      <span class="inst-bar-label">Experiencia previa en</span>
+      <div class="inst-divider"></div>
+      <div class="inst-chips">
+        <span class="inst-chip"><i class="fas fa-building-columns"></i>MOP</span>
+        <span class="inst-chip"><i class="fas fa-building-columns"></i>CORFO</span>
+        <span class="inst-chip"><i class="fas fa-building-columns"></i>SUBPESCA</span>
+        <span class="inst-chip"><i class="fas fa-leaf"></i>Min. Medio Ambiente</span>
+        <span class="inst-chip"><i class="fas fa-certificate"></i>SMA · ETFA</span>
+      </div>
+    </div>
+    <div class="team-stats-row">
+      <div class="team-stat"><p class="team-stat-n">+20 <span>años</span></p><p class="team-stat-lbl">de experiencia en el sector ambiental</p></div>
+      <div class="team-stat"><p class="team-stat-n">3</p><p class="team-stat-lbl">regiones de operación activa en Chile</p></div>
+      <div class="team-stat"><p class="team-stat-n">6</p><p class="team-stat-lbl">áreas de servicio multidisciplinarias</p></div>
+      <div class="team-stat team-stat--last"><p class="team-stat-n">ETFA</p><p class="team-stat-lbl">acreditación SMA vigente en Chile</p></div>
+    </div>
+  </div>
 </section>
 
-<!-- Footer -->
-<footer style="background:#111827; color:#9ca3af; padding:4rem 0 2rem;">
-    <div style="max-width:80rem; margin:0 auto; padding:0 1.5rem;">
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:2.5rem; padding-bottom:2.5rem; border-bottom:1px solid #1f2937; margin-bottom:2rem;">
-            <div style="grid-column:span 2;">
-                <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;"><div style="width:34px; height:34px; border-radius:9px; background:#ff8c42; display:flex; align-items:center; justify-content:center;"><i class="fas fa-leaf" style="color:#fff; font-size:.8rem;"></i></div><span style="font-weight:700; font-size:1rem; color:#fff;">SyA <span style="font-weight:400; opacity:.6;">Group</span></span></div>
-                <p style="font-size:.82rem; font-weight:300; line-height:1.7; max-width:280px;">Sanguesa y Asociados Limitada. Asesoria ambiental tecnica y legal desde 2003.</p>
-            </div>
-            <div>
-                <h5 style="color:#fff; font-size:.85rem; font-weight:600; margin-bottom:16px;">Servicios</h5>
-                <ul style="list-style:none; display:flex; flex-direction:column; gap:10px; font-size:.82rem; font-weight:300;">
-                    <li><a href="#" style="color:#9ca3af; text-decoration:none;" onmouseover="this.style.color='#ff8c42'" onmouseout="this.style.color='#9ca3af'">Impacto Ambiental (MIA)</a></li>
-                    <li><a href="#" style="color:#9ca3af; text-decoration:none;" onmouseover="this.style.color='#ff8c42'" onmouseout="this.style.color='#9ca3af'">Auditorias Ambientales</a></li>
-                    <li><a href="#" style="color:#9ca3af; text-decoration:none;" onmouseover="this.style.color='#ff8c42'" onmouseout="this.style.color='#9ca3af'">Licenciamiento</a></li>
-                    <li><a href="#" style="color:#9ca3af; text-decoration:none;" onmouseover="this.style.color='#ff8c42'" onmouseout="this.style.color='#9ca3af'">Residuos Peligrosos</a></li>
-                </ul>
-            </div>
-            <div>
-                <h5 style="color:#fff; font-size:.85rem; font-weight:600; margin-bottom:16px;">Empresa</h5>
-                <ul style="list-style:none; display:flex; flex-direction:column; gap:10px; font-size:.82rem; font-weight:300;">
-                    <li><a href="#nosotros" style="color:#9ca3af; text-decoration:none;" onmouseover="this.style.color='#ff8c42'" onmouseout="this.style.color='#9ca3af'">Sobre nosotros</a></li>
-                    <li><a href="#contacto"  style="color:#9ca3af; text-decoration:none;" onmouseover="this.style.color='#ff8c42'" onmouseout="this.style.color='#9ca3af'">Contacto</a></li>
-                    <li><a href="{% url 'login' %}" style="color:#9ca3af; text-decoration:none;" onmouseover="this.style.color='#ff8c42'" onmouseout="this.style.color='#9ca3af'">Acceso al sistema</a></li>
-                </ul>
-            </div>
-        </div>
-        <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px; font-size:.75rem;">
-            <p>&copy; 2026 SyA Group · Sanguesa y Asociados Limitada. Todos los derechos reservados.</p>
-            <p>Hecho con cuidado en Mexico</p>
-        </div>
+{# ── EXPERIENCIA ───────────────────────────────────── #}
+<section id="experiencia" class="exp-section">
+  <div class="section-inner">
+    <div class="section-label" style="display:flex;justify-content:center;">Nuestra experiencia</div>
+    <h2 style="place-self:center;text-align:center;">Proyectos que<br><em>dejan huella.</em></h2>
+    <div class="exp-grid">
+      <div class="exp-card">
+        <span class="exp-card-tag">Sector Energético · PVA</span>
+        <p class="exp-card-title">Programa de Vigilancia Ambiental — 5 años continuos</p>
+        <p class="exp-card-body">Ejecución y coordinación de monitoreos ambientales sistemáticos para instalaciones del sector energético en zonas costeras del norte y centro de Chile.</p>
+        <span class="exp-client"><i class="fas fa-industry" style="font-size:.65rem;"></i>Sector energético — largo plazo</span>
+      </div>
+      <div class="exp-card">
+        <span class="exp-card-tag">Industria Hidrocarburos · Flora &amp; Fauna</span>
+        <p class="exp-card-title">Informes de Flora y Fauna 2024–2026</p>
+        <p class="exp-card-body">Levantamiento y análisis de biodiversidad terrestre y marina en zonas de influencia de operaciones de hidrocarburos.</p>
+        <span class="exp-client"><i class="fas fa-oil-well" style="font-size:.65rem;"></i>ENAP</span>
+      </div>
+      <div class="exp-card">
+        <span class="exp-card-tag">Emergencia Ambiental · Derrame</span>
+        <p class="exp-card-title">Monitoreo post-derrame y recuperación de costa</p>
+        <p class="exp-card-body">Evaluación y seguimiento del impacto ambiental tras derrames marítimos. Coordinación con autoridades y empresas navieras.</p>
+        <span class="exp-client"><i class="fas fa-ship" style="font-size:.65rem;"></i>Empresas navieras</span>
+      </div>
+      <div class="exp-card">
+        <span class="exp-card-tag">Sector Portuario · Monitoreo</span>
+        <p class="exp-card-title">Vigilancia ambiental en puertos del norte de Chile</p>
+        <p class="exp-card-body">Programas de monitoreo marino y terrestre en instalaciones portuarias, incluyendo calidad de agua y comunidades bentónicas.</p>
+        <span class="exp-client"><i class="fas fa-anchor" style="font-size:.65rem;"></i>Puerto de Arica · Puerto de Antofagasta</span>
+      </div>
     </div>
-</footer>
+    <div class="clients-row">
+      <p class="clients-label">Clientes y organismos con quienes hemos trabajado</p>
+      <div class="clients-logos">
+        <div class="client-chip"><i class="fas fa-building-columns"></i>ENAP</div>
+        <div class="client-chip"><i class="fas fa-building-columns"></i>CONAF</div>
+        <div class="client-chip"><i class="fas fa-building-columns"></i>Oxiquim</div>
+        <div class="client-chip"><i class="fas fa-anchor"></i>Puerto de Arica</div>
+        <div class="client-chip"><i class="fas fa-anchor"></i>Puerto de Antofagasta</div>
+        <div class="client-chip"><i class="fas fa-building-columns"></i>CORFO</div>
+        <div class="client-chip"><i class="fas fa-building-columns"></i>MOP</div>
+        <div class="client-chip"><i class="fas fa-building-columns"></i>SUBPESCA</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<!-- ── Chat Widget ──────────────────────────────── -->
-<div id="chat-widget">
+<section id="certificaciones" class="cert-full-section">
+  <div class="cert-bg-shape cert-bg-shape--1"></div>
+  <div class="cert-bg-shape cert-bg-shape--2"></div>
 
-    <!-- CTA bubble -->
-    <div id="chat-cta" onclick="openChat()">
-        <div style="width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,#025283,#0367a6); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
-            <i class="fas fa-comment-dots" style="color:#fff; font-size:.78rem;"></i>
+  <div class="section-inner cert-full-inner">
+    <div class="cert-full-header">
+      <div class="cert-full-eyebrow">
+        <span class="cert-eyebrow-dot"></span>
+        Acreditaciones oficiales
+      </div>
+      <h2>
+        "La experiencia y calidad<br>
+        de nuestro servicio es<br>
+        <em>nuestro respaldo."</em>
+      </h2>
+      <p class="cert-full-lead">
+        Contamos con certificaciones nacionales e internacionales que avalan la
+        rigurosidad técnica y la validez legal de cada uno de nuestros entregables.
+      </p>
+    </div>
+
+    <div class="cert-docs-grid">
+
+      <div class="cert-doc-card" onclick="openCertModal('{% static "pdf/Certificado-OI-216-17020.pdf" %}', 'Certificación OI 216 17020')">
+        <div class="cert-doc-preview">
+          <div class="cert-doc-watermark">
+            <i class="fas fa-file-certificate"></i>
+            </div>
+            <div class="cert-doc-stamp cert-doc-stamp--inn">
+            <img src="{% static 'pdf/Certificado-OI-216-17020.jpg' %}" alt="INN" onerror="this.style.display='none'">
+            <span>INN</span>
+          </div>
+          <div class="cert-doc-overlay">
+            <i class="fas fa-magnifying-glass-plus"></i>
+            <span>Ver certificado</span>
+          </div>
+        </div>
+        <div class="cert-doc-info">
+          <span class="cert-doc-tag cert-doc-tag--blue">Acreditación</span>
+          <p class="cert-doc-title">Certificación OI 216 17020</p>
+          <p class="cert-doc-body">Instituto Nacional de Normalización · NCh-ISO/IEC 17020:2012</p>
+          <a href="{% static 'pdf/Certificado-OI-216-17020.pdf' %}" target="_blank" class="cert-doc-btn" onclick="event.stopPropagation()">
+            <i class="fas fa-download"></i> Descargar PDF
+          </a>
+        </div>
+      </div>
+
+      <div class="cert-doc-card" onclick="openCertModal('{% static "pdf/RESOL-383-SMA-2017.pdf" %}', 'Resolución 383 SMA 2017')">
+        <div class="cert-doc-preview">
+          <div class="cert-doc-watermark"><i class="fas fa-file-certificate"></i></div>
+          <div class="cert-doc-stamp cert-doc-stamp--sma">
+            <span>SMA</span>
+          </div>
+          <div class="cert-doc-overlay">
+            <i class="fas fa-magnifying-glass-plus"></i>
+            <span>Ver certificado</span>
+          </div>
+        </div>
+        <div class="cert-doc-info">
+          <span class="cert-doc-tag cert-doc-tag--green">Resolución</span>
+          <p class="cert-doc-title">Resolución 383 SMA 2017</p>
+          <p class="cert-doc-body">Superintendencia del Medio Ambiente · Fiscalización Ambiental</p>
+          <a href="{% static 'pdf/RESOL-383-SMA-2017.pdf' %}" target="_blank" class="cert-doc-btn" onclick="event.stopPropagation()">
+            <i class="fas fa-download"></i> Descargar PDF
+          </a>
+        </div>
+      </div>
+
+      <div class="cert-doc-card" onclick="openCertModal('{% static "pdf/RESOL-813-SMA-2018.pdf" %}', 'Resolución 813 SMA 2018')">
+        <div class="cert-doc-preview">
+          <div class="cert-doc-watermark"><i class="fas fa-file-certificate"></i></div>
+          <div class="cert-doc-stamp cert-doc-stamp--sma">
+            <span>SMA</span>
+          </div>
+          <div class="cert-doc-overlay">
+            <i class="fas fa-magnifying-glass-plus"></i>
+            <span>Ver certificado</span>
+          </div>
+        </div>
+        <div class="cert-doc-info">
+          <span class="cert-doc-tag cert-doc-tag--green">Resolución</span>
+          <p class="cert-doc-title">Resolución 813 SMA 2018</p>
+          <p class="cert-doc-body">Superintendencia del Medio Ambiente · Actualización ETFA</p>
+          <a href="{% static 'pdf/RESOL-813-SMA-2018.pdf' %}" target="_blank" class="cert-doc-btn" onclick="event.stopPropagation()">
+            <i class="fas fa-download"></i> Descargar PDF
+          </a>
+        </div>
+      </div>
+
+      <div class="cert-doc-card" onclick="openCertModal('{% static "pdf/Certificado-OI-219-17020.pdf" %}', 'Certificación OI 219 17020')">
+        <div class="cert-doc-preview">
+          <div class="cert-doc-watermark"><i class="fas fa-file-certificate"></i></div>
+          <div class="cert-doc-stamp cert-doc-stamp--inn">
+            <span>INN</span>
+          </div>
+          <div class="cert-doc-overlay">
+            <i class="fas fa-magnifying-glass-plus"></i>
+            <span>Ver certificado</span>
+          </div>
+        </div>
+        <div class="cert-doc-info">
+          <span class="cert-doc-tag cert-doc-tag--blue">Acreditación</span>
+          <p class="cert-doc-title">Certificación OI 219 17020</p>
+          <p class="cert-doc-body">Instituto Nacional de Normalización · NCh-ISO/IEC 17020:2012</p>
+          <a href="{% static 'pdf/Certificado-OI-219-17020.pdf' %}" target="_blank" class="cert-doc-btn" onclick="event.stopPropagation()">
+            <i class="fas fa-download"></i> Descargar PDF
+          </a>
+        </div>
+      </div>
+
+      <div class="cert-doc-card" onclick="openCertModal('{% static "pdf/AA-824-Cert-_2.pdf" %}', 'Certificación Inspection Agency AA-824')">
+        <div class="cert-doc-preview">
+          <div class="cert-doc-watermark"><i class="fas fa-file-certificate"></i></div>
+          <div class="cert-doc-stamp cert-doc-stamp--ias">
+            <span>IAS</span>
+          </div>
+          <div class="cert-doc-overlay">
+            <i class="fas fa-magnifying-glass-plus"></i>
+            <span>Ver certificado</span>
+          </div>
+        </div>
+        <div class="cert-doc-info">
+          <span class="cert-doc-tag cert-doc-tag--orange">Internacional</span>
+          <p class="cert-doc-title">Certificación Inspection Agency AA-824</p>
+          <p class="cert-doc-body">International Accreditation Service · Inspection Agency AA-824 (Type A)</p>
+          <a href="{% static 'pdf/AA-824-Cert-_2.pdf' %}" target="_blank" class="cert-doc-btn" onclick="event.stopPropagation()">
+            <i class="fas fa-download"></i> Descargar PDF
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="cert-summary-row">
+      <div class="cert-summary-badge">
+        <div class="cert-summary-icon" style="background:rgba(26,95,168,0.1);color:#1a5fa8;">
+          <i class="fas fa-award"></i>
         </div>
         <div>
-            <p style="font-size:.76rem; font-weight:600; color:#025283; margin:0 0 2px;">Tienes dudas ambientales?</p>
-            <p style="font-size:.7rem; color:#6b7280; margin:0; line-height:1.4;">Chatea con nuestro asesor</p>
+          <p class="cert-summary-label">ISO/IEC 17020</p>
+          <p class="cert-summary-sub">Organismos de Inspección · INN</p>
         </div>
-        <button onclick="event.stopPropagation(); document.getElementById('chat-cta').classList.add('hidden');"
-                style="background:none; border:none; color:#9ca3af; cursor:pointer; font-size:.95rem; padding:2px; margin-left:2px;">&times;</button>
+      </div>
+      <div class="cert-summary-badge">
+        <div class="cert-summary-icon" style="background:rgba(74,158,47,0.1);color:#4a9e2f;">
+          <i class="fas fa-certificate"></i>
+        </div>
+        <div>
+          <p class="cert-summary-label">ETFA · SMA</p>
+          <p class="cert-summary-sub">Fiscalización Ambiental Chile</p>
+        </div>
+      </div>
+      <div class="cert-summary-badge">
+        <div class="cert-summary-icon" style="background:rgba(232,66,10,0.08);color:#e8420a;">
+          <i class="fas fa-globe"></i>
+        </div>
+        <div>
+          <p class="cert-summary-label">IAS AA-824</p>
+          <p class="cert-summary-sub">International Accreditation Service</p>
+        </div>
+      </div>
+      <div class="cert-summary-badge">
+        <div class="cert-summary-icon" style="background:rgba(200,169,110,0.1);color:#c8a96e;">
+          <i class="fas fa-shield-check"></i>
+        </div>
+        <div>
+          <p class="cert-summary-label">Ley Karin</p>
+          <p class="cert-summary-sub">Cumplimiento normativo interno</p>
+        </div>
+      </div>
     </div>
 
-    <!-- Chat window -->
-    <div id="chat-window" class="hidden">
+  </div>
+</section>
 
-        <!-- Header -->
-        <div class="chat-header">
-            <div style="display:flex; align-items:center; gap:10px; flex:1;">
-                <div class="chat-avatar">
-                    <i class="fas fa-leaf" style="color:#ff8c42; font-size:.85rem;"></i>
-                    <span class="chat-avatar-dot"></span>
-                </div>
-                <div>
-                    <p style="font-size:.85rem; font-weight:700; color:#fff; margin:0 0 1px;">Asesor SyA Group</p>
-                    <p style="font-size:.68rem; color:rgba(255,255,255,0.6); margin:0; display:flex; align-items:center; gap:4px;">
-                        <span style="width:5px; height:5px; background:#86bf30; border-radius:50%; display:inline-block;"></span>
-                        En linea
-                    </p>
-                </div>
-            </div>
-            <div style="display:flex; align-items:center; gap:6px;">
-                <button class="chat-header-btn" id="reset-chat" title="Nueva conversacion">
-                    <i class="fas fa-rotate-right"></i>
-                </button>
-                <button class="chat-header-btn" id="close-chat" title="Cerrar">
-                    <i class="fas fa-xmark"></i>
-                </button>
-            </div>
-        </div>
-
-        <!-- Messages -->
-        <div id="chat-messages">
-            <div id="chat-history">
-                <div class="msg-row" style="display:flex; align-items:flex-start; gap:8px;">
-                    <div style="width:26px; height:26px; border-radius:50%; background:linear-gradient(135deg,#025283,#0367a6); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:2px;">
-                        <i class="fas fa-leaf" style="color:#ff8c42; font-size:.6rem;"></i>
-                    </div>
-                    <div>
-                        <div class="msg-bot">{{ mensaje_bienvenida|default:"Hola! En que puedo ayudarte hoy?" }}</div>
-                        <p class="msg-time" style="padding-left:3px;">Ahora mismo</p>
-                    </div>
-                </div>
-                <div id="quick-replies" style="display:flex; flex-wrap:wrap; gap:6px; padding-left:34px;">
-                    <button class="qr-chip" onclick="quickReply('Que servicios ofrecen?')"><i class="fas fa-leaf" style="font-size:.6rem;"></i>Servicios</button>
-                    <button class="qr-chip" onclick="quickReply('Necesito una MIA')"><i class="fas fa-map" style="font-size:.6rem;"></i>Necesito MIA</button>
-                    <button class="qr-chip" onclick="quickReply('Cuales son sus precios?')"><i class="fas fa-tag" style="font-size:.6rem;"></i>Precios</button>
-                    <button class="qr-chip" onclick="quickReply('Como los contacto?')"><i class="fas fa-phone" style="font-size:.6rem;"></i>Contacto</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Input -->
-        <div class="chat-input-area">
-            <div class="chat-input-row">
-                <input id="chat-input" type="text" placeholder="Escribe tu consulta...">
-                <button id="chat-send">
-                    <i class="fas fa-paper-plane" style="color:#fff; font-size:.72rem;"></i>
-                </button>
-            </div>
-            <p class="chat-powered">Powered by SyA Group</p>
-        </div>
+{# ── MODAL VISOR PDF ───────────────────────────────── #}
+<div id="cert-modal" class="cert-modal" onclick="closeCertModal()">
+  <div class="cert-modal-box" onclick="event.stopPropagation()">
+    <div class="cert-modal-header">
+      <p id="cert-modal-title" class="cert-modal-title"></p>
+      <div style="display:flex;gap:8px;">
+        <a id="cert-modal-dl" href="#" target="_blank" class="cert-modal-btn cert-modal-btn--dl">
+          <i class="fas fa-download"></i> Descargar
+        </a>
+        <button class="cert-modal-btn cert-modal-btn--close" onclick="closeCertModal()">
+          <i class="fas fa-xmark"></i>
+        </button>
+      </div>
     </div>
+    <iframe id="cert-modal-frame" src="" title="Certificado"></iframe>
+  </div>
+</div>
 
-    <!-- FAB -->
-    <div id="chat-button">
-        <i id="chat-icon-open"  class="fas fa-comment-dots" style="color:#fff; font-size:1rem;"></i>
-        <i id="chat-icon-close" class="fas fa-xmark"        style="color:#fff; font-size:.95rem; display:none;"></i>
+{# ── SEDES ─────────────────────────────────────────── #}
+<section id="sedes" class="geo-section">
+  <div class="geo-glow"></div>
+  <div class="geo-inner">
+    <div class="geo-header">
+      <div class="section-label geo-label">Presencia geográfica</div>
+      <h2>Operamos en<br><em>todo Chile.</em></h2>
     </div>
+    <div class="geo-grid">
+      <div class="geo-card">
+        <div class="geo-tag">Casa Matriz</div>
+        <p class="geo-title">Región de Valparaíso</p>
+        <p class="geo-addr">Los Molinos N° 747<br>Quilpué, Región de Valparaíso<br><br><span style="color:rgba(255,255,255,0.3);font-size:.75rem;">Oficina principal · Atención general</span></p>
+      </div>
+      <div class="geo-card">
+        <div class="geo-tag">Zona Norte</div>
+        <p class="geo-title">Región de Antofagasta</p>
+        <p class="geo-addr">Contacto técnico en la zona norte<br>II Región, Chile<br><br><span style="color:rgba(255,255,255,0.3);font-size:.75rem;">Soporte a proyectos mineros y portuarios</span></p>
+      </div>
+      <div class="geo-card">
+        <div class="geo-tag">Norte Grande</div>
+        <p class="geo-title">Región de Tarapacá</p>
+        <p class="geo-addr">Edificio Darma<br>Iquique, I Región de Tarapacá<br><br><span style="color:rgba(255,255,255,0.3);font-size:.75rem;">Operaciones en zona altiplánica y costera</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# ── CONTACTO ──────────────────────────────────────── #}
+<section id="contacto" class="cta-block">
+  <div class="cta-inner">
+    <div class="section-label" style="justify-content:center;">Contacto</div>
+    <h2>¿Tienes un proyecto<br><em>ambiental en mente?</em></h2>
+    <p>Cuéntanos tu caso. Un especialista de SyA Group revisará tu situación y te contactará sin costo ni compromiso. Atendemos todo el territorio nacional.</p>
+    <div class="cta-buttons">
+      <a href="mailto:contacto@syagroup.cl" class="btn-ocean"><i class="fas fa-envelope" style="font-size:.8rem;"></i>Enviar consulta</a>
+      <a href="https://wa.me/569XXXXXXXX" class="btn-outline-ocean"><i class="fab fa-whatsapp" style="font-size:.9rem;"></i>WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+{# ── FOOTER ────────────────────────────────────────── #}
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="logo" style="margin-bottom:.75rem;">
+          <img src="{% static 'img/Logo.png' %}" alt="SyA Group Logo" style="height:50px;">
+        </a>
+        <p>Sangüesa y Asociados Limitada.<br>Asesoría ambiental técnica desde 2003.</p>
+      </div>
+      <div>
+        <p class="footer-col-title">Servicios</p>
+        <ul class="footer-links">
+          <li><a href="#">Estudios Marinos</a></li><li><a href="#">Laboratorio de Ecología</a></li>
+          <li><a href="#">Operaciones Submarinas</a></li><li><a href="#">Estudios Terrestres</a></li>
+          <li><a href="#">Gestión Ambiental</a></li><li><a href="#">Recuperación y Limpieza</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Empresa</p>
+        <ul class="footer-links">
+          <li><a href="#nosotros">Nosotros</a></li><li><a href="#equipo">Equipo</a></li>
+          <li><a href="#certificaciones">Certificaciones</a></li><li><a href="#">ETFA</a></li>
+          <li><a href="#">Normativa</a></li><li><a href="#">Ley Karin</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="footer-col-title">Sedes</p>
+        <ul class="footer-links">
+          <li><a href="#">Quilpué (Casa Matriz)</a></li><li><a href="#">Antofagasta</a></li><li><a href="#">Iquique</a></li>
+        </ul>
+        <div style="margin-top:1.5rem;">
+          <a href="mailto:contacto@syagroup.cl" style="font-size:.78rem;color:rgba(255,255,255,0.3);text-decoration:none;display:flex;align-items:center;gap:7px;transition:color .2s;" onmouseover="this.style.color='#4a9e2f'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">
+            <i class="fas fa-envelope" style="font-size:.7rem;"></i>contacto@syagroup.cl
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 SyA Group · Sangüesa y Asociados Limitada. Todos los derechos reservados.</p>
+      <p>Hecho con cuidado en <a href="#">Chile</a></p>
+    </div>
+  </div>
+</footer>
+
+{# ── CHAT WIDGET ───────────────────────────────────── #}
+<div id="chat-widget">
+  <div id="chat-cta" onclick="openChat()">
+    <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#0a1628,#0e4d6e);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+      <i class="fas fa-comment-dots" style="color:#4a9e2f;font-size:.78rem;"></i>
+    </div>
+    <div>
+      <p style="font-size:.76rem;font-weight:600;color:#0e4d6e;margin:0 0 2px;">¿Dudas ambientales?</p>
+      <p style="font-size:.7rem;color:#6b7280;margin:0;line-height:1.4;">Chatea con nuestro asesor</p>
+    </div>
+    <button onclick="event.stopPropagation(); document.getElementById('chat-cta').classList.add('hidden');" style="background:none;border:none;color:#9ca3af;cursor:pointer;font-size:.95rem;padding:2px;margin-left:2px;">&times;</button>
+  </div>
+  <div id="chat-window" class="hidden">
+    <div class="chat-header">
+      <div style="display:flex;align-items:center;gap:10px;flex:1;">
+        <div class="chat-avatar">
+          <i class="fas fa-water" style="color:#4a9e2f;font-size:.85rem;"></i>
+          <span class="chat-avatar-dot"></span>
+        </div>
+        <div>
+          <p style="font-size:.85rem;font-weight:700;color:#fff;margin:0 0 1px;">Asesor SyA Group</p>
+          <p style="font-size:.68rem;color:rgba(255,255,255,0.6);margin:0;display:flex;align-items:center;gap:4px;">
+            <span style="width:5px;height:5px;background:#4a9e2f;border-radius:50%;display:inline-block;"></span>En línea
+          </p>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;">
+        <button class="chat-header-btn" id="reset-chat"><i class="fas fa-rotate-right"></i></button>
+        <button class="chat-header-btn" id="close-chat"><i class="fas fa-xmark"></i></button>
+      </div>
+    </div>
+    <div id="chat-messages">
+      <div id="chat-history">
+        <div class="msg-row" style="display:flex;align-items:flex-start;gap:8px;">
+          <div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#0a1628,#0e4d6e);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;">
+            <i class="fas fa-water" style="color:#4a9e2f;font-size:.6rem;"></i>
+          </div>
+          <div>
+            <div class="msg-bot">{{ mensaje_bienvenida|default:"¡Hola! ¿En qué puedo ayudarte hoy?" }}</div>
+            <p class="msg-time" style="padding-left:3px;">Ahora mismo</p>
+          </div>
+        </div>
+        <div id="quick-replies" style="display:flex;flex-wrap:wrap;gap:6px;padding-left:34px;">
+          <button class="qr-chip" onclick="quickReply('¿Qué servicios ofrecen?')"><i class="fas fa-water" style="font-size:.6rem;"></i>Servicios</button>
+          <button class="qr-chip" onclick="quickReply('Necesito estudios marinos')"><i class="fas fa-microscope" style="font-size:.6rem;"></i>Est. Marinos</button>
+          <button class="qr-chip" onclick="quickReply('¿Cuáles son sus precios?')"><i class="fas fa-tag" style="font-size:.6rem;"></i>Precios</button>
+          <button class="qr-chip" onclick="quickReply('¿Cómo los contacto?')"><i class="fas fa-phone" style="font-size:.6rem;"></i>Contacto</button>
+        </div>
+      </div>
+    </div>
+    <div class="chat-input-area">
+      <div class="chat-input-row">
+        <input id="chat-input" type="text" placeholder="Escribe tu consulta...">
+        <button id="chat-send"><i class="fas fa-paper-plane" style="color:#fff;font-size:.72rem;"></i></button>
+      </div>
+      <p class="chat-powered">Powered by SyA Group</p>
+    </div>
+  </div>
+  <div id="chat-button">
+    <i id="chat-icon-open" class="fas fa-comment-dots" style="color:#fff;font-size:1rem;"></i>
+    <i id="chat-icon-close" class="fas fa-xmark" style="color:#fff;font-size:.95rem;display:none;"></i>
+  </div>
 </div>
 
 <script>
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 60) navbar.classList.add('scrolled');
-        else navbar.classList.remove('scrolled');
-    });
+  window.CHAT_SEND_URL  = '{% url "public_chat" %}';
+  window.CHAT_RESET_URL = '{% url "reset_chat" %}';
+  window.CHAT_WELCOME   = '{{ mensaje_bienvenida|default:"¡Hola de nuevo! ¿En qué puedo ayudarte hoy?"|escapejs }}';
 
-    const navDesktop = document.getElementById('nav-links-desktop');
-    if (window.innerWidth >= 768) navDesktop.style.display = 'flex';
-    window.addEventListener('resize', () => {
-        navDesktop.style.display = window.innerWidth >= 768 ? 'flex' : 'none';
-    });
-
-    const sendUrl  = '{% url "public_chat" %}';
-    const resetUrl = '{% url "reset_chat" %}';
-
-    function getCookie(name) {
-        let val = null;
-        if (document.cookie) {
-            document.cookie.split(';').forEach(c => {
-                c = c.trim();
-                if (c.startsWith(name + '=')) val = decodeURIComponent(c.slice(name.length + 1));
-            });
-        }
-        return val;
-    }
-
-    function timeLabel() {
-        const now = new Date();
-        return now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
-    }
-
-    function renderMarkdown(text) {
-        return text
-            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-            .replace(/\*(.*?)\*/g, '<em>$1</em>')
-            .replace(/^- (.+)$/gm, '<li>$1</li>')
-            .replace(/(<li>.*<\/li>)/gs, '<ul style="margin:6px 0 6px 16px; padding:0; list-style:disc;">$1</ul>')
-            .replace(/\n{2,}/g, '<br><br>')
-            .replace(/\n/g, '<br>');
-    }
-
-    function botAvatar() {
-        return `<div style="width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,#025283,#0367a6);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;"><i class="fas fa-leaf" style="color:#ff8c42;font-size:.6rem;"></i></div>`;
-    }
-
-    function appendMessage(text, fromUser) {
-        const history  = document.getElementById('chat-history');
-        const messages = document.getElementById('chat-messages');
-        const wrapper  = document.createElement('div');
-        wrapper.className = 'msg-row';
-        wrapper.style.cssText = 'display:flex;flex-direction:column;gap:3px;' + (fromUser ? 'align-items:flex-end;' : 'align-items:flex-start;');
-        if (fromUser) {
-            wrapper.innerHTML = `<div class="msg-user">${renderMarkdown(text)}</div><span class="msg-time">${timeLabel()}</span>`;
-        } else {
-            wrapper.innerHTML = `
-                <div style="display:flex;align-items:flex-start;gap:7px;">
-                    ${botAvatar()}
-                    <div>
-                        <div class="msg-bot">${renderMarkdown(text)}</div>
-                        <span class="msg-time" style="padding-left:3px;">${timeLabel()}</span>
-                    </div>
-                </div>`;
-        }
-        history.appendChild(wrapper);
-        messages.scrollTop = messages.scrollHeight;
-    }
-
-    function showTyping() {
-        const history  = document.getElementById('chat-history');
-        const messages = document.getElementById('chat-messages');
-        const el = document.createElement('div');
-        el.id = 'typing-indicator';
-        el.className = 'msg-row';
-        el.style.cssText = 'display:flex;align-items:flex-start;gap:7px;';
-        el.innerHTML = `${botAvatar()}<div class="msg-bot" style="padding:10px 14px;display:flex;gap:4px;align-items:center;"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>`;
-        history.appendChild(el);
-        messages.scrollTop = messages.scrollHeight;
-    }
-
-    function hideTyping() {
-        const el = document.getElementById('typing-indicator');
-        if (el) el.remove();
-    }
-
-    function showTransferCard() {
-        const history  = document.getElementById('chat-history');
-        const messages = document.getElementById('chat-messages');
-        const card = document.createElement('div');
-        card.className = 'msg-row';
-        card.style.paddingLeft = '34px';
-        card.innerHTML = `
-            <div class="transfer-card">
-                <div class="transfer-card-title">
-                    <i class="fas fa-circle-check" style="color:#0367a6;"></i>
-                    Consulta transferida exitosamente
-                </div>
-                <p style="font-size:.78rem; color:#374151; margin-bottom:12px; line-height:1.5;">
-                    Un asesor recibio tu informacion y se pondra en contacto contigo pronto.
-                </p>
-                <div style="display:flex; gap:8px; flex-wrap:wrap;">
-                    <button class="transfer-btn transfer-btn-primary" onclick="doResetChat()">
-                        <i class="fas fa-rotate-right"></i> Nueva consulta
-                    </button>
-                    <button class="transfer-btn transfer-btn-secondary" onclick="closeChatWindow()">
-                        <i class="fas fa-xmark"></i> Cerrar chat
-                    </button>
-                </div>
-            </div>`;
-        history.appendChild(card);
-        messages.scrollTop = messages.scrollHeight;
-    }
-
-    function sendChatMessage(override) {
-        const input   = document.getElementById('chat-input');
-        const message = override || input.value.trim();
-        if (!message) return;
-
-        const qr = document.getElementById('quick-replies');
-        if (qr) qr.remove();
-
-        appendMessage(message, true);
-        if (!override) { input.value = ''; input.focus(); }
-
-        showTyping();
-
-        fetch(sendUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-                'X-CSRFToken': getCookie('csrftoken'),
-                'X-Requested-With': 'XMLHttpRequest'
-            },
-            body: new URLSearchParams({ message })
-        })
-        .then(r => r.json())
-        .then(data => {
-            hideTyping();
-            if (!data.ok) {
-                appendMessage(data.error || 'No se pudo obtener respuesta.', false);
-                return;
-            }
-            const reply = data.reply || '';
-            appendMessage(reply, false);
-
-            const transferKeywords = ['conectarte con un asesor', 'asesor para finalizar', 'en breve te contactaran', 'transferido'];
-            const wasTransferred = transferKeywords.some(kw => reply.toLowerCase().includes(kw));
-            if (wasTransferred) {
-                setTimeout(() => showTransferCard(), 800);
-            }
-        })
-        .catch(() => {
-            hideTyping();
-            appendMessage('Error de conexion. Intentalo de nuevo.', false);
-        });
-    }
-
-    async function doResetChat() {
-        await fetch(resetUrl, {
-            method: 'POST',
-            headers: { 'X-CSRFToken': getCookie('csrftoken') }
-        });
-        const history = document.getElementById('chat-history');
-        history.innerHTML = '';
-
-        const welcomeRow = document.createElement('div');
-        welcomeRow.className = 'msg-row';
-        welcomeRow.style.cssText = 'display:flex;align-items:flex-start;gap:8px;';
-        welcomeRow.innerHTML = `
-            ${botAvatar()}
-            <div>
-                <div class="msg-bot">{{ mensaje_bienvenida|default:"Hola de nuevo! En que puedo ayudarte hoy?" }}</div>
-                <p class="msg-time" style="padding-left:3px;">Ahora mismo</p>
-            </div>`;
-        history.appendChild(welcomeRow);
-
-        const qrDiv = document.createElement('div');
-        qrDiv.id = 'quick-replies';
-        qrDiv.style.cssText = 'display:flex;flex-wrap:wrap;gap:6px;padding-left:34px;';
-        qrDiv.innerHTML = `
-            <button class="qr-chip" onclick="quickReply('Que servicios ofrecen?')"><i class="fas fa-leaf" style="font-size:.6rem;"></i>Servicios</button>
-            <button class="qr-chip" onclick="quickReply('Necesito una MIA')"><i class="fas fa-map" style="font-size:.6rem;"></i>Necesito MIA</button>
-            <button class="qr-chip" onclick="quickReply('Cuales son sus precios?')"><i class="fas fa-tag" style="font-size:.6rem;"></i>Precios</button>
-            <button class="qr-chip" onclick="quickReply('Como los contacto?')"><i class="fas fa-phone" style="font-size:.6rem;"></i>Contacto</button>`;
-        history.appendChild(qrDiv);
-
-        document.getElementById('chat-messages').scrollTop = 0;
-    }
-
-    function closeChatWindow() {
-        document.getElementById('chat-window').classList.add('hidden');
-        document.getElementById('chat-icon-open').style.display  = 'block';
-        document.getElementById('chat-icon-close').style.display = 'none';
-    }
-
-    window.quickReply = text => sendChatMessage(text);
-
-    window.openChat = function() {
-        document.getElementById('chat-window').classList.remove('hidden');
-        document.getElementById('chat-cta').classList.add('hidden');
-        document.getElementById('chat-icon-open').style.display  = 'none';
-        document.getElementById('chat-icon-close').style.display = 'block';
-        document.getElementById('chat-input').focus();
-    };
-
-    document.addEventListener('DOMContentLoaded', () => {
-        const btn = document.getElementById('chat-button');
-        const win = document.getElementById('chat-window');
-
-        btn.addEventListener('click', () => {
-            if (!win.classList.contains('hidden')) closeChatWindow();
-            else openChat();
-        });
-
-        document.getElementById('close-chat').addEventListener('click', closeChatWindow);
-        document.getElementById('reset-chat').addEventListener('click', doResetChat);
-        document.getElementById('chat-send').addEventListener('click', () => sendChatMessage());
-        document.getElementById('chat-input').addEventListener('keydown', e => {
-            if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendChatMessage(); }
-        });
-    });
+  function openCertModal(url, title) {
+    document.getElementById('cert-modal-title').textContent = title;
+    document.getElementById('cert-modal-frame').src = url;
+    document.getElementById('cert-modal-dl').href = url;
+    document.getElementById('cert-modal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCertModal() {
+    document.getElementById('cert-modal').classList.remove('active');
+    document.getElementById('cert-modal-frame').src = '';
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCertModal(); });
 </script>
-
+<script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
