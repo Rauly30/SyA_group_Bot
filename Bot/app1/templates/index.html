@@ -159,10 +159,11 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════
-     SERVICIOS
+     SERVICIOS — con fondo topo azul
      ═══════════════════════════════════════════════════ -->
 <section id="servicios" class="services-section">
-  <div class="topo-canvas topo-light topo-animated" aria-hidden="true"></div>
+  <!-- Topographic background SVG -->
+  <div class="topo-canvas topo-light topo-animated" aria-hidden="true" id="topoServices"></div>
 
   <div class="section-inner" style="position:relative;z-index:1;">
     <div class="services-header reveal">
@@ -180,42 +181,47 @@
         <div class="svc-icon" style="background:rgba(18,73,160,.09);"><i class="fas fa-water" style="color:#1249A0;font-size:.95rem;"></i></div>
         <span class="svc-tag" style="background:rgba(18,73,160,.09);color:#1249A0;">EMO</span>
         <p class="svc-title">Estudios Marinos y Oceanográficos</p>
-        <p class="svc-desc">Vigilancia biológica y ecológica de ambientes marinos en conformidad con estándares internacionales y cumplimiento de RCA (Ley 19.300).</p>
+        <p class="svc-desc">Vigilancia biológica y ecológica de ambientes marinos en conformidad con estándares internacionales y cumplimiento de RCA (Ley 19.300). Incorporamos metodologías del MMA, DIRECTEMAR, SERNAPESCA y SUBPESCA.</p>
         <div class="svc-arrow">Ver más <i class="fas fa-arrow-right"></i></div>
       </div>
+
       <div class="svc-card reveal reveal-delay-2">
         <div class="svc-icon" style="background:rgba(14,165,233,.09);"><i class="fas fa-flask" style="color:#0284C7;font-size:.95rem;"></i></div>
         <span class="svc-tag" style="background:rgba(14,165,233,.09);color:#0284C7;">LAB</span>
         <p class="svc-title">Laboratorio de Ecología</p>
-        <p class="svc-desc">Instalaciones y equipos especializados para el análisis técnico-científico de comunidades bentónicas, fitoplancton y zooplancton.</p>
+        <p class="svc-desc">Contamos con instalaciones y equipos especializados para el análisis técnico-científico de comunidades bentónicas submareales e intermareales, fitoplancton y zooplancton en agua dulce y salada.</p>
         <div class="svc-arrow">Ver más <i class="fas fa-arrow-right"></i></div>
       </div>
+
       <div class="svc-card reveal reveal-delay-3">
         <div class="svc-icon" style="background:rgba(8,45,102,.1);"><i class="fas fa-person-swimming" style="color:#082D66;font-size:.95rem;"></i></div>
         <span class="svc-tag" style="background:rgba(8,45,102,.09);color:#082D66;">OPS</span>
         <p class="svc-title">Operaciones Submarinas</p>
-        <p class="svc-desc">Sistema NDT/MPI —único en Chile— para detección de grietas, fugas y defectos de soldaduras en estructuras metálicas subacuáticas.</p>
+        <p class="svc-desc">Servicios subacuáticos de alta tecnología para buques, puertos y boyas. Contamos con el sistema NDT/MPI —único en Chile— para detección de grietas, fugas y defectos de soldaduras en estructuras metálicas subacuáticas.</p>
         <div class="svc-arrow">Ver más <i class="fas fa-arrow-right"></i></div>
       </div>
+
       <div class="svc-card reveal reveal-delay-1">
         <div class="svc-icon" style="background:rgba(18,73,160,.07);"><i class="fas fa-tree" style="color:#3B6EC4;font-size:.95rem;"></i></div>
         <span class="svc-tag" style="background:rgba(18,73,160,.07);color:#3B6EC4;">ETD</span>
         <p class="svc-title">Estudios Terrestres y Dulceacuícolas</p>
-        <p class="svc-desc">Estudios del biota y ecosistemas continentales orientados a su conservación y producción, con metodologías actualizadas.</p>
+        <p class="svc-desc">Estudios del biota y ecosistemas continentales orientados a su conservación y producción, con metodologías actualizadas según la institucionalidad ambiental chilena vigente.</p>
         <div class="svc-arrow">Ver más <i class="fas fa-arrow-right"></i></div>
       </div>
+
       <div class="svc-card reveal reveal-delay-2">
         <div class="svc-icon" style="background:rgba(99,102,241,.08);"><i class="fas fa-file-contract" style="color:#4338CA;font-size:.95rem;"></i></div>
         <span class="svc-tag" style="background:rgba(99,102,241,.08);color:#4338CA;">GAP</span>
         <p class="svc-title">Gestión Ambiental y Permisos Sectoriales</p>
-        <p class="svc-desc">Identificación de normativa ambiental y permisos sectoriales aplicables, en concordancia con la Ley N° 19.300 y el SEIA.</p>
+        <p class="svc-desc">Facilitamos la identificación de normativa ambiental y permisos sectoriales aplicables, en concordancia con la Ley N° 19.300 sobre Bases Generales del Medio Ambiente y el SEIA.</p>
         <div class="svc-arrow">Ver más <i class="fas fa-arrow-right"></i></div>
       </div>
+
       <div class="svc-card reveal reveal-delay-3">
         <div class="svc-icon" style="background:rgba(230,126,34,.08);"><i class="fas fa-recycle" style="color:#B45309;font-size:.95rem;"></i></div>
         <span class="svc-tag" style="background:rgba(230,126,34,.08);color:#B45309;">ORL</span>
         <p class="svc-title">Operaciones de Recuperación y Limpieza</p>
-        <p class="svc-desc">Mitigación y recuperación de pasivos ambientales con seguimiento temporal y difusión de resultados ante autoridades competentes.</p>
+        <p class="svc-desc">Experiencia en mitigación y recuperación de pasivos ambientales para revertir los efectos de la contaminación, con seguimiento temporal y difusión de resultados ante las autoridades competentes.</p>
         <div class="svc-arrow">Ver más <i class="fas fa-arrow-right"></i></div>
       </div>
     </div>
@@ -223,10 +229,36 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════
-     NOSOTROS
+     CTA TOPO — Conversa con nuestros asesores (tras servicios)
+     ═══════════════════════════════════════════════════ -->
+<section class="topo-cta-strip">
+  <!-- topographic relief background in warm orange tones -->
+  <div class="topo-cta-bg" aria-hidden="true" id="topoCtaWarm"></div>
+
+  <div class="topo-cta-inner">
+    <div class="topo-cta-left">
+      <div class="topo-cta-overline">Atención especializada</div>
+      <h2 class="topo-cta-title">¿Tienes un proyecto<br>ambiental en mente?</h2>
+      <p class="topo-cta-desc">Nuestros especialistas en biología marina, gestión ambiental y permisos SEIA están listos para orientarte. Sin costo ni compromiso.</p>
+    </div>
+    <div class="topo-cta-right">
+      <button class="btn-topo-cta" onclick="window.openChat()">
+        <div class="btn-topo-cta-icon"><i class="fas fa-comment-dots"></i></div>
+        <div class="btn-topo-cta-text">
+          <span class="btn-topo-cta-label">Conversa con nuestros asesores</span>
+          <span class="btn-topo-cta-sub">Respuesta inmediata · Sin costo</span>
+        </div>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     NOSOTROS — con fondo topo suave
      ═══════════════════════════════════════════════════ -->
 <section id="nosotros" class="about-section">
-  <div class="topo-canvas topo-light topo-animated" aria-hidden="true" style="opacity:.07;"></div>
+  <!-- subtle topographic relief over light background -->
+  <div class="topo-canvas topo-light" aria-hidden="true" id="topoAbout" style="opacity:.07;"></div>
 
   <div class="section-inner about-inner">
     <div class="about-text reveal">
@@ -286,11 +318,12 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════
-     EQUIPO
+     EQUIPO — con fondo topo azul suave
      ═══════════════════════════════════════════════════ -->
 <section id="equipo" class="team-section">
   <div class="team-accent-line"></div>
-  <div class="topo-canvas topo-light topo-animated" aria-hidden="true"></div>
+  <!-- topographic background for team section -->
+  <div class="topo-canvas topo-light topo-animated" aria-hidden="true" id="topoTeam"></div>
 
   <div class="section-inner team-inner">
     <div class="team-eyebrow"><span class="team-eyebrow-rule"></span>Nuestra gente</div>
@@ -310,7 +343,7 @@
           </div>
         </div>
         <div class="lead-sep"></div>
-        <p class="lead-desc">Más de dos décadas dirigiendo proyectos ambientales estratégicos en ecosistemas marinos y terrestres a lo largo de todo el territorio nacional.</p>
+        <p class="lead-desc">Más de dos décadas dirigiendo proyectos ambientales estratégicos en ecosistemas marinos y terrestres a lo largo de todo el territorio nacional. Motor fundacional de SyA Group desde 2003.</p>
         <div class="chip-row">
           <span class="chip">+20 años</span>
           <span class="chip">Estudios Marinos</span>
@@ -327,7 +360,7 @@
           </div>
         </div>
         <div class="lead-sep"></div>
-        <p class="lead-desc">Responsable de la estructura operativa y la sostenibilidad económica del grupo.</p>
+        <p class="lead-desc">Responsable de la estructura operativa y la sostenibilidad económica del grupo. Garantiza la eficiencia en la gestión de recursos y el crecimiento ordenado de la empresa.</p>
         <div class="chip-row"><span class="chip">Finanzas</span><span class="chip">Operaciones</span></div>
       </div>
       <div class="lead-card reveal reveal-delay-3">
@@ -340,7 +373,7 @@
           </div>
         </div>
         <div class="lead-sep"></div>
-        <p class="lead-desc">Lidera la ejecución técnica y asegura el cumplimiento de estándares nacionales e internacionales.</p>
+        <p class="lead-desc">Lidera la ejecución técnica y asegura el cumplimiento de estándares nacionales e internacionales. Referente en control de calidad y entrega de informes técnicos.</p>
         <div class="chip-row"><span class="chip">ISO 17020</span><span class="chip">SEIA</span><span class="chip">ETFA</span></div>
       </div>
     </div>
@@ -367,7 +400,7 @@
       <div class="spec-card reveal reveal-delay-4">
         <div class="spec-ico spec-ico--purple"><i class="fas fa-gavel"></i></div>
         <p class="spec-name">Derecho y Gestión Ambiental</p>
-        <p class="spec-desc">Tramitación de permisos sectoriales, SEIA (DIA/EIA), auditorías y cumplimiento regulatorio ante OAECA.</p>
+        <p class="spec-desc">Tramitación de permisos sectoriales, SEIA (DIA/EIA), auditorías y cumplimiento regulatorio integral ante OAECA.</p>
       </div>
     </div>
     <div class="team-stats-row">
@@ -380,10 +413,10 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════
-     EXPERIENCIA
+     EXPERIENCIA — con fondo topo parchment
      ═══════════════════════════════════════════════════ -->
 <section id="experiencia" class="exp-section">
-  <div class="topo-canvas topo-warm topo-animated" aria-hidden="true"></div>
+  <div class="topo-canvas topo-warm topo-animated" aria-hidden="true" id="topoExp"></div>
 
   <div class="section-inner">
     <div class="section-label" style="justify-content:center;">Nuestra experiencia</div>
@@ -392,63 +425,168 @@
       <div class="exp-card reveal reveal-delay-1">
         <span class="exp-card-tag">Sector Energético · PVA</span>
         <p class="exp-card-title">Programa de Vigilancia Ambiental — 5 años continuos</p>
-        <p class="exp-card-body">Ejecución y coordinación de monitoreos ambientales sistemáticos (PVA) para instalaciones del sector energético en zonas costeras del norte y centro de Chile.</p>
+        <p class="exp-card-body">Ejecución y coordinación de monitoreos ambientales sistemáticos (PVA) para instalaciones del sector energético en zonas costeras del norte y centro de Chile, con variables químicas y biológicas según RCA vigente.</p>
         <span class="exp-client"><i class="fas fa-industry"></i>Sector energético — largo plazo</span>
       </div>
       <div class="exp-card reveal reveal-delay-2">
         <span class="exp-card-tag">Industria Hidrocarburos · Flora &amp; Fauna</span>
         <p class="exp-card-title">Informes de Flora y Fauna 2024–2026</p>
-        <p class="exp-card-body">Levantamiento y análisis de biodiversidad terrestre y marina en zonas de influencia de operaciones de hidrocarburos, cumpliendo compromisos de RCA vigentes.</p>
+        <p class="exp-card-body">Levantamiento y análisis de biodiversidad terrestre y marina en zonas de influencia de operaciones de hidrocarburos, cumpliendo compromisos de RCA vigentes con metodología CONAF y MMA.</p>
         <span class="exp-client"><i class="fas fa-oil-well"></i>ENAP</span>
       </div>
       <div class="exp-card reveal reveal-delay-3">
         <span class="exp-card-tag">Emergencia Ambiental · Derrame</span>
         <p class="exp-card-title">Monitoreo post-derrame y recuperación de costa</p>
-        <p class="exp-card-body">Evaluación y seguimiento del impacto ambiental tras derrames marítimos. Biorremediación de suelos y relocalización de comunidades bentónicas impactadas.</p>
+        <p class="exp-card-body">Evaluación y seguimiento del impacto ambiental tras derrames marítimos. Biorremediación de suelos, coordinación con DIRECTEMAR y autoridades, y relocalización de comunidades bentónicas impactadas.</p>
         <span class="exp-client"><i class="fas fa-ship"></i>Empresas navieras</span>
       </div>
       <div class="exp-card reveal reveal-delay-4">
         <span class="exp-card-tag">Sector Portuario · Monitoreo</span>
         <p class="exp-card-title">Vigilancia ambiental en puertos del norte de Chile</p>
-        <p class="exp-card-body">Programas de monitoreo marino y terrestre en instalaciones portuarias, incluyendo calidad de agua y comunidades bentónicas.</p>
+        <p class="exp-card-body">Programas de monitoreo marino y terrestre en instalaciones portuarias, incluyendo calidad de agua, comunidades bentónicas y cumplimiento de normativa SEIA e informes a SEREMI Medio Ambiente.</p>
         <span class="exp-client"><i class="fas fa-anchor"></i>Puerto de Arica · Puerto de Antofagasta</span>
       </div>
     </div>
     <div class="clients-row">
       <p class="clients-label">Clientes y organismos con quienes hemos trabajado</p>
-      <div class="brands-carousel-wrapper">
-        <div class="brands-carousel-container">
-          <div class="brands-carousel-track brands-carousel-ltr" id="clientesCarouselTrackLTR">
-            {% for i in "12345678910" %}
-            <div class="brand-carousel-item cliente-item">
-              <div class="cliente-card">
-                <div class="cliente-logo-wrapper">
-                  <img src="{% static 'img/'|add:forloop.counter|add:'.jpg' %}" alt="Cliente {{ forloop.counter }}" class="brand-logo" loading="lazy">
+      <div class="brands-carousel-wrapper" data-aos="fade-up">
+            <div class="brands-carousel-container">
+                <div class="brands-carousel-track brands-carousel-ltr" id="clientesCarouselTrackLTR">
+                    <!-- Cliente 1 -->
+                    <div class="brand-carousel-item cliente-item">
+                        <div class="cliente-card">
+                            <div class="cliente-logo-wrapper">
+                                <img src="{% static 'img/1.jpg' %}" alt="Cliente 1" class="brand-logo" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+ 
+                    <!-- Cliente 2 -->
+                    <div class="brand-carousel-item cliente-item">
+                        <div class="cliente-card">
+                            <div class="cliente-logo-wrapper">
+                                <img src="{% static 'img/2.jpg' %}" alt="Cliente 2" class="brand-logo" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+ 
+                    <!-- Cliente 3 -->
+                    <div class="brand-carousel-item cliente-item">
+                        <div class="cliente-card">
+                            <div class="cliente-logo-wrapper">
+                                <img src="{% static 'img/3.jpg' %}" alt="Cliente 3" class="brand-logo" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+ 
+                    <!-- Cliente 4 -->
+                    <div class="brand-carousel-item cliente-item">
+                        <div class="cliente-card">
+                            <div class="cliente-logo-wrapper">
+                                <img src="{% static 'img/4.jpg' %}" alt="Cliente 4" class="brand-logo" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+ 
+                    <!-- Cliente 5 -->
+                    <div class="brand-carousel-item cliente-item">
+                        <div class="cliente-card">
+                            <div class="cliente-logo-wrapper">
+                                <img src="{% static 'img/5.jpg' %}" alt="Cliente 5" class="brand-logo" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+ 
+                    <!-- Cliente 6 -->
+                    <div class="brand-carousel-item cliente-item">
+                        <div class="cliente-card">
+                            <div class="cliente-logo-wrapper">
+                                <img src="{% static 'img/6.jpg' %}" alt="Cliente 6" class="brand-logo" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+ 
+                    <!-- Cliente 7 -->
+                    <div class="brand-carousel-item cliente-item">
+                        <div class="cliente-card">
+                            <div class="cliente-logo-wrapper">
+                                <img src="{% static 'img/7.jpg' %}" alt="Cliente 7" class="brand-logo" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+ 
+                    <!-- Cliente 8 -->
+                    <div class="brand-carousel-item cliente-item">
+                        <div class="cliente-card">
+                            <div class="cliente-logo-wrapper">
+                                <img src="{% static 'img/8.jpg' %}" alt="Cliente 8" class="brand-logo" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+ 
+                    <!-- Cliente 9 -->
+                    <div class="brand-carousel-item cliente-item">
+                        <div class="cliente-card">
+                            <div class="cliente-logo-wrapper">
+                                <img src="{% static 'img/9.jpg' %}" alt="Cliente 9" class="brand-logo" loading="lazy">
+                            </div>
+                        </div>
+                    </div>
+ 
+                    <!-- Cliente 10 -->
+                    <div class="brand-carousel-item cliente-item">
+                        <div class="cliente-card">
+                            <div class="cliente-logo-wrapper">
+                                <img src="{% static 'img/10.jpg' %}" alt="Cliente 10" class="brand-logo" loading="lazy">
+                            </div>                         
+                        </div>
+                    </div>
+ 
                 </div>
-              </div>
             </div>
-            {% endfor %}
-          </div>
-        </div>
-      </div>
+        </div>  
     </div>
   </div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════
-     CERTIFICACIONES
+     CTA TOPO 2 — antes de certificaciones
+     ═══════════════════════════════════════════════════ -->
+<section class="topo-cta-strip" style="background:linear-gradient(108deg,var(--brand-blue3) 0%,var(--brand-blue2) 100%);">
+  <div class="topo-cta-bg" aria-hidden="true" id="topoCtaBlue"></div>
+  <div class="topo-cta-inner">
+    <div class="topo-cta-left">
+      <div class="topo-cta-overline" style="--before-bg:rgba(255,255,255,.3);">Asesoría sin costo</div>
+      <h2 class="topo-cta-title">Conversemos sobre<br>tu caso ambiental</h2>
+      <p class="topo-cta-desc">Desde permisos sectoriales hasta monitoreos de RCA — nuestros especialistas te orientan desde el primer contacto. Sin burocracia, sin rodeos.</p>
+    </div>
+    <div class="topo-cta-right">
+      <button class="btn-topo-cta" onclick="window.openChat()" style="color:var(--brand-blue3);">
+        <div class="btn-topo-cta-icon" style="background:rgba(18,73,160,.1);color:var(--brand-blue3);"><i class="fas fa-comment-dots"></i></div>
+        <div class="btn-topo-cta-text">
+          <span class="btn-topo-cta-label">Conversa con nuestros asesores</span>
+          <span class="btn-topo-cta-sub">Chat en línea · Respuesta inmediata</span>
+        </div>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════
+     CERTIFICACIONES — fondo oscuro con topo
      ═══════════════════════════════════════════════════ -->
 <section id="certificaciones" class="cert-full-section">
   <div class="cert-bg-shape cert-bg-shape--1"></div>
   <div class="cert-bg-shape cert-bg-shape--2"></div>
-  <div class="topo-canvas topo-dark topo-animated" aria-hidden="true"></div>
+  <!-- topographic overlay on dark background -->
+  <div class="topo-canvas topo-dark topo-animated" aria-hidden="true" id="topoCert"></div>
 
   <div class="section-inner cert-full-inner">
     <div class="cert-full-header reveal">
       <div class="cert-full-eyebrow"><span class="cert-eyebrow-dot"></span>Acreditaciones oficiales · ETFA</div>
       <h2>La experiencia y calidad<br>de nuestro servicio es<br>nuestro respaldo.</h2>
       <p class="cert-full-lead">
-        Acreditados por la Superintendencia del Medio Ambiente (SMA) como Entidad Técnica de Fiscalización Ambiental (ETFA) — Resolución Exenta N° 741/2023.
+        Acreditados por la Superintendencia del Medio Ambiente (SMA) como Entidad Técnica de Fiscalización Ambiental (ETFA) — Resolución Exenta N° 741/2023 — con certificaciones nacionales e internacionales que avalan la rigurosidad técnica y la validez legal de cada uno de nuestros entregables.
       </p>
     </div>
     <div style="background:rgba(18,73,160,0.08);border:1px solid rgba(18,73,160,0.22);border-radius:16px;padding:24px 28px;margin-bottom:40px;" class="reveal">
@@ -461,26 +599,26 @@
           <p style="font-size:.75rem;font-weight:600;color:rgba(255,255,255,.7);margin-bottom:8px;display:flex;align-items:center;gap:6px;">
             <i class="fas fa-droplet" style="color:var(--brand-accent);font-size:.7rem;"></i>Aguas
           </p>
-          <p style="font-family:var(--font-sans);font-size:.72rem;color:rgba(255,255,255,.32);line-height:1.6;">Residuales, potables, superficiales, subterráneas y de mar.</p>
+          <p style="font-family:var(--font-sans);font-size:.72rem;color:rgba(255,255,255,.32);line-height:1.6;">Residuales, potables, superficiales, subterráneas y de mar. Medición de pH, oxígeno, caudal, temperatura, cloro y más.</p>
         </div>
         <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:16px;">
           <p style="font-size:.75rem;font-weight:600;color:rgba(255,255,255,.7);margin-bottom:8px;display:flex;align-items:center;gap:6px;">
             <i class="fas fa-layer-group" style="color:var(--brand-accent);font-size:.7rem;"></i>Sedimentos
           </p>
-          <p style="font-family:var(--font-sans);font-size:.72rem;color:rgba(255,255,255,.32);line-height:1.6;">Marinos, lacustres y acuáticos. Muestreo y medición de potencial Redox.</p>
+          <p style="font-family:var(--font-sans);font-size:.72rem;color:rgba(255,255,255,.32);line-height:1.6;">Marinos, lacustres y acuáticos. Muestreo y medición de potencial Redox en matrices ambientales.</p>
         </div>
         <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:16px;">
           <p style="font-size:.75rem;font-weight:600;color:rgba(255,255,255,.7);margin-bottom:8px;display:flex;align-items:center;gap:6px;">
             <i class="fas fa-ship" style="color:var(--brand-accent);font-size:.7rem;"></i>Embarcaciones
           </p>
-          <p style="font-family:var(--font-sans);font-size:.72rem;color:rgba(255,255,255,.32);line-height:1.6;">Muestreo de carbono en transporte marítimo e intermareal.</p>
+          <p style="font-family:var(--font-sans);font-size:.72rem;color:rgba(255,255,255,.32);line-height:1.6;">Muestreo de carbono en transporte marítimo e intermareal. Control de emisiones en operaciones navales.</p>
         </div>
       </div>
     </div>
     <div class="cert-docs-grid">
       <div class="cert-doc-card reveal reveal-delay-1" onclick="openCertModal('{% static 'pdf/Certificado-OI-216-17020.pdf' %}', 'Certificación OI 216 · ISO 17020')">
         <div class="cert-doc-preview">
-          <iframe class="cert-pdf-thumb" src="{% static 'pdf/Certificado-OI-216-17020.pdf' %}#toolbar=0&navpanes=0&scrollbar=0&view=FitH&zoom=80" title="Vista previa" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+          <iframe class="cert-pdf-thumb" src="{% static 'pdf/Certificado-OI-216-17020.pdf' %}#toolbar=0&navpanes=0&scrollbar=0&view=FitH&zoom=80" title="Vista previa Certificación OI 216 17020" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
           <div class="cert-doc-overlay"><i class="fas fa-expand-alt"></i><span>Ver certificado</span></div>
           <div class="cert-doc-stamp cert-doc-stamp--inn"><span>INN</span></div>
         </div>
@@ -548,11 +686,11 @@
 </div>
 
 <!-- ═══════════════════════════════════════════════════
-     SEDES
+     SEDES — fondo oscuro con topo
      ═══════════════════════════════════════════════════ -->
 <section id="sedes" class="geo-section">
   <div class="geo-glow"></div>
-  <div class="topo-canvas topo-dark topo-animated" aria-hidden="true"></div>
+  <div class="topo-canvas topo-dark topo-animated" aria-hidden="true" id="topoGeo"></div>
 
   <div class="geo-inner">
     <div class="geo-header reveal">
@@ -586,16 +724,22 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════════
-     CONTACTO
+     CONTACTO — con fondo topo suave y CTA chat
      ═══════════════════════════════════════════════════ -->
 <section id="contacto" class="cta-block">
-  <div class="topo-canvas topo-light" aria-hidden="true" style="opacity:.06;"></div>
+  <!-- Subtle topo on light contact section -->
+  <div class="topo-canvas topo-light" aria-hidden="true" id="topoContact" style="opacity:.06;"></div>
 
   <div class="cta-inner">
     <div class="section-eyebrow" style="justify-content:center;">Contacto</div>
     <h2 class="reveal">¿Tienes un proyecto<br>ambiental en mente?</h2>
     <p class="reveal reveal-delay-1">Cuéntanos tu caso. Un especialista de SyA Group revisará tu situación y te contactará sin costo ni compromiso. Atendemos todo el territorio nacional.</p>
     <div class="cta-buttons reveal reveal-delay-2">
+      <!-- Primary: abre el chatbot -->
+      <button class="btn-cta-warm" onclick="window.openChat()">
+        <i class="fas fa-comment-dots" style="font-size:.88rem;"></i>
+        Conversa con nuestros asesores
+      </button>
       <a href="mailto:contacto@syagroup.cl" class="btn-ocean"><i class="fas fa-envelope" style="font-size:.78rem;"></i> Enviar consulta</a>
       <a href="https://wa.me/569XXXXXXXX" class="btn-outline-ocean"><i class="fab fa-whatsapp" style="font-size:.88rem;"></i> WhatsApp</a>
     </div>
@@ -658,8 +802,19 @@
   </div>
 </footer>
 
-<!-- ═══ CHAT WINDOW (posicionado por CSS encima del FAB) ════════════════════════════════════ -->
+<!-- ═══ CHAT WIDGET ════════════════════════════════════ -->
 <div id="chat-widget">
+  <div id="chat-cta" onclick="openChat()">
+    <div style="width:34px;height:34px;border-radius:9px;background:var(--brand-blue);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+      <i class="fas fa-comment-dots" style="color:#fff;font-size:.78rem;"></i>
+    </div>
+    <div>
+      <p style="font-family:var(--font-sans);font-size:.75rem;font-weight:600;color:var(--ink);margin:0 0 2px;">¿Dudas ambientales?</p>
+      <p style="font-family:var(--font-sans);font-size:.68rem;color:var(--ink-muted);margin:0;line-height:1.4;">Chatea con nuestro asesor</p>
+    </div>
+    <button onclick="event.stopPropagation(); document.getElementById('chat-cta').classList.add('hidden');"
+            style="background:none;border:none;color:var(--ink-ghost);cursor:pointer;font-size:.95rem;padding:2px;margin-left:2px;">&times;</button>
+  </div>
   <div id="chat-window" class="hidden">
     <div class="chat-header">
       <div style="display:flex;align-items:center;gap:10px;flex:1;">
@@ -704,12 +859,30 @@
       <p class="chat-powered">Powered by SyA Group</p>
     </div>
   </div>
+  <div id="chat-button">
+    <i id="chat-icon-open" class="fas fa-comment-dots" style="color:#fff;font-size:.95rem;"></i>
+    <i id="chat-icon-close" class="fas fa-xmark" style="color:#fff;font-size:.9rem;display:none;"></i>
+  </div>
 </div>
 
 <script>
   window.CHAT_SEND_URL  = '{% url "public_chat" %}';
   window.CHAT_RESET_URL = '{% url "reset_chat" %}';
   window.CHAT_WELCOME   = '{{ mensaje_bienvenida|default:"¡Hola de nuevo! ¿En qué puedo ayudarte hoy?"|escapejs }}';
+
+  function openCertModal(url, title) {
+    document.getElementById('cert-modal-title').textContent = title;
+    document.getElementById('cert-modal-frame').src = url;
+    document.getElementById('cert-modal-dl').href = url;
+    document.getElementById('cert-modal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeCertModal() {
+    document.getElementById('cert-modal').classList.remove('active');
+    document.getElementById('cert-modal-frame').src = '';
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCertModal(); });
 </script>
 <script src="{% static 'js/main.js' %}"></script>
 </body>
