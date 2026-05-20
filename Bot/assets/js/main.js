@@ -1,24 +1,19 @@
 /* ============================================================
-   SyA Group Chile · main.js  — Rev. 2026-C
-   Correcciones:
-   - IDs de botones de control del carousel ahora coinciden con el HTML
-   - createInfiniteCarousel se ejecuta después de que las imágenes carguen
-   - Guard para CHAT_SEND_URL no definido
-   - Scroll reveal con IntersectionObserver (más eficiente)
-   - Animación de navbar toggle mejorada (barras → X)
+   SyA Group Chile · main.js — 2026
    ============================================================ */
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ── 1. NAVBAR SCROLL ─────────────────────────────── */
+  /* ═══════════════════════════════════════════════════
+     1. NAVBAR
+     ═══════════════════════════════════════════════════ */
   const navbar = document.getElementById('navbar');
   if (navbar) {
     const onScroll = () => navbar.classList.toggle('solid', window.scrollY > 50);
     window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll(); // estado inicial sin esperar scroll
+    onScroll();
   }
 
-  /* ── 2. MOBILE NAV ────────────────────────────────── */
   const navToggle      = document.getElementById('nav-toggle');
   const navMobilePanel = document.getElementById('navMobilePanel');
 
@@ -32,36 +27,26 @@ document.addEventListener('DOMContentLoaded', () => {
   if (navToggle && navMobilePanel) {
     navToggle.addEventListener('click', () => {
       const isOpen = navMobilePanel.classList.toggle('open');
-      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      navToggle.setAttribute('aria-expanded', String(isOpen));
       navToggle.classList.toggle('is-open', isOpen);
     });
-
-    /* Cierra el menú al hacer click en un enlace */
-    navMobilePanel.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', closeMobileNav);
-    });
-
-    /* Cierra el menú al hacer click fuera */
+    navMobilePanel.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileNav));
     document.addEventListener('click', e => {
-      if (!navToggle.contains(e.target) && !navMobilePanel.contains(e.target)) {
-        closeMobileNav();
-      }
+      if (!navToggle.contains(e.target) && !navMobilePanel.contains(e.target)) closeMobileNav();
     });
   }
 
-  /* ── 3. HERO CAROUSEL ─────────────────────────────── */
-  const track   = document.getElementById('cTrack');
-  const cBar    = document.getElementById('cBar');
-  // FIX: Los IDs correctos según el HTML actualizado
-  const btnPrev = document.getElementById('ctrl-prev');
-  const btnNext = document.getElementById('ctrl-next');
+  /* ═══════════════════════════════════════════════════
+     2. HERO CAROUSEL
+     ═══════════════════════════════════════════════════ */
+  const track = document.getElementById('cTrack');
+  const cBar  = document.getElementById('cBar');
 
   if (track) {
     const slides   = Array.from(track.querySelectorAll('.c-slide'));
     const N        = slides.length;
-    const DELAY    = 6200;   // ms entre slides
+    const DELAY    = 6200;
     let cur = 0, timer = null, rafId = null, rafStart = null;
-
     const barItems = cBar ? Array.from(cBar.querySelectorAll('.c-bar-item')) : [];
 
     barItems.forEach(item => {
@@ -71,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
 
-    /* ── Barra de progreso RAF ──────────────────────── */
     function resetAllProgBars() {
       barItems.forEach(item => {
         const pb = item.querySelector('.c-bar-prog');
@@ -93,68 +77,156 @@ document.addEventListener('DOMContentLoaded', () => {
       rafId = requestAnimationFrame(step);
     }
 
-    function updateUI(idx) {
-      slides.forEach((s, i)   => s.classList.toggle('active', i === idx));
-      barItems.forEach((b, i) => b.classList.toggle('active', i === idx));
-      track.style.transform = `translateX(-${idx * 100}%)`;
-    }
-
     function goTo(idx) {
       cur = ((idx % N) + N) % N;
-      updateUI(cur);
+      slides.forEach((s, i)   => s.classList.toggle('active', i === cur));
+      barItems.forEach((b, i) => b.classList.toggle('active', i === cur));
+      track.style.transform = `translateX(-${cur * 100}%)`;
       clearInterval(timer);
       timer = setInterval(() => goTo(cur + 1), DELAY);
       startProg(cur);
     }
 
-    /* Arrancar */
     goTo(0);
 
-    /* Botones prev / next */
-    if (btnNext) btnNext.addEventListener('click', () => goTo(cur + 1));
-    if (btnPrev) btnPrev.addEventListener('click', () => goTo(cur - 1));
-
-    /* Swipe táctil */
     let touchStartX = 0;
-    track.addEventListener('touchstart', e => {
-      touchStartX = e.touches[0].clientX;
-    }, { passive: true });
-    track.addEventListener('touchend', e => {
+    track.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    track.addEventListener('touchend',   e => {
       const dx = e.changedTouches[0].clientX - touchStartX;
       if (Math.abs(dx) > 50) goTo(dx < 0 ? cur + 1 : cur - 1);
     }, { passive: true });
 
-    /* Pausa cuando la pestaña no es visible */
     document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        clearInterval(timer);
-        cancelAnimationFrame(rafId);
+      if (document.hidden) { clearInterval(timer); cancelAnimationFrame(rafId); }
+      else goTo(cur);
+    });
+  }
+
+  /* ═══════════════════════════════════════════════════
+     3. GENERADOR DE RELIEVES TOPOGRÁFICOS
+     ─────────────────────────────────────────────────
+     Genera SVG de curvas de nivel pseudo-orgánicas
+     y los inyecta en todos los .topo-canvas.
+
+     Opciones configurables por data-atributo:
+       data-topo-color   → stroke color (default: según variante)
+       data-topo-lines   → número de curvas (default: 14)
+       data-topo-seed    → semilla para reproducibilidad
+
+     Variantes automáticas:
+       .topo-light → stroke azul corporativo
+       .topo-dark  → stroke blanco
+       .topo-warm  → stroke naranja
+       .topo-img-overlay → stroke blanco (sobre foto)
+     ═══════════════════════════════════════════════════ */
+
+  function seededRandom(seed) {
+    let s = seed;
+    return () => {
+      s = (s * 1664525 + 1013904223) & 0xffffffff;
+      return (s >>> 0) / 0xffffffff;
+    };
+  }
+
+  function buildTopoSVG(container) {
+    const w = container.offsetWidth  || window.innerWidth;
+    const h = container.offsetHeight || 400;
+    if (w < 10 || h < 10) return;
+
+    const isLight   = container.classList.contains('topo-light');
+    const isDark    = container.classList.contains('topo-dark');
+    const isWarm    = container.classList.contains('topo-warm');
+    const isImg     = container.classList.contains('topo-img-overlay');
+
+    let defaultColor;
+    if (isImg)        defaultColor = 'rgba(255,255,255,0.6)';
+    else if (isDark)  defaultColor = 'rgba(255,255,255,0.55)';
+    else if (isWarm)  defaultColor = 'rgba(180,85,10,0.65)';
+    else               defaultColor = 'rgba(18,73,160,0.55)';
+
+    const strokeColor = container.dataset.topoColor || defaultColor;
+    const numLines    = parseInt(container.dataset.topoLines || '14', 10);
+    const seed        = parseInt(container.dataset.topoSeed  || String(Math.round(Math.random() * 9999)), 10);
+    const rand        = seededRandom(seed);
+
+    // Parámetros de las curvas
+    const marginX = -w * 0.08;
+    const totalW  = w - marginX * 2;
+
+    const paths = [];
+
+    for (let i = 0; i < numLines; i++) {
+      const t        = (i + 1) / (numLines + 1);
+      const baseY    = h * (0.08 + t * 0.84);
+      const segments = 8 + Math.floor(rand() * 4); // 8..11 puntos
+      const pts      = [];
+
+      for (let j = 0; j <= segments; j++) {
+        const x   = marginX + (j / segments) * totalW;
+        const amp = h * (0.04 + rand() * 0.10);
+        const y   = baseY + (rand() - 0.5) * 2 * amp;
+        pts.push({ x, y });
+      }
+
+      // Convertir puntos a path cubic bezier suave
+      let d = `M ${pts[0].x.toFixed(1)},${pts[0].y.toFixed(1)}`;
+      for (let j = 1; j < pts.length; j++) {
+        const prev  = pts[j - 1];
+        const curr  = pts[j];
+        const cpX   = (prev.x + curr.x) / 2;
+        d += ` C ${cpX.toFixed(1)},${prev.y.toFixed(1)} ${cpX.toFixed(1)},${curr.y.toFixed(1)} ${curr.x.toFixed(1)},${curr.y.toFixed(1)}`;
+      }
+
+      // Peso visual: líneas más cercanas al centro son más gruesas
+      const distFromCenter = Math.abs(t - 0.5) * 2; // 0..1
+      const sw = (0.4 + (1 - distFromCenter) * 0.5).toFixed(2);
+
+      paths.push(`<path d="${d}" stroke="${strokeColor}" stroke-width="${sw}" fill="none" stroke-linecap="round"/>`);
+    }
+
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid slice" aria-hidden="true">${paths.join('')}</svg>`;
+
+    // Reemplazar SVG existente o insertar nuevo
+    const existing = container.querySelector('svg');
+    if (existing) existing.remove();
+
+    // Para topo-img-overlay el SVG va dentro como hijo (la imagen va en background-image)
+    container.insertAdjacentHTML('beforeend', svg);
+  }
+
+  // Construir todos los topos
+  function initAllTopos() {
+    document.querySelectorAll('.topo-canvas').forEach(el => {
+      // Medir después de que el padre tenga dimensiones
+      if (el.offsetWidth < 10) {
+        requestAnimationFrame(() => buildTopoSVG(el));
       } else {
-        goTo(cur);
+        buildTopoSVG(el);
       }
     });
   }
 
-  /* ── 4. CARRUSEL INFINITO DE CLIENTES ─────────────── */
+  // Reconstruir al redimensionar (debounce)
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(initAllTopos, 220);
+  }, { passive: true });
 
-  /**
-   * FIX: createInfiniteCarousel esperaba que el track tuviera scrollWidth,
-   * pero las imágenes pueden no haber cargado al ejecutarse DOMContentLoaded.
-   * Solución: usar requestIdleCallback + reintento si scrollWidth sigue en 0.
-   */
+  initAllTopos();
+
+  /* ═══════════════════════════════════════════════════
+     4. CARRUSEL INFINITO DE CLIENTES
+     ═══════════════════════════════════════════════════ */
   function createInfiniteCarousel(track) {
     if (!track) return;
-
     const SPEED = 0.045; // px/ms
 
     function init() {
-      // Eliminar clones anteriores si los hay (para reinicios seguros)
       Array.from(track.querySelectorAll('[data-clone]')).forEach(el => el.remove());
-
       const items = Array.from(track.children);
       if (!items.length) return;
 
-      // Clonar una vez para el loop infinito
       items.forEach(item => {
         const clone = item.cloneNode(true);
         clone.setAttribute('data-clone', '1');
@@ -162,132 +234,89 @@ document.addEventListener('DOMContentLoaded', () => {
         track.appendChild(clone);
       });
 
-      // FIX: Medir después de que los clones se añadan al DOM
-      let halfWidth = track.scrollWidth / 2;
-
-      // Si halfWidth sigue siendo 0, reintentar una vez con rAF
-      if (halfWidth < 10) {
-        requestAnimationFrame(() => {
-          halfWidth = track.scrollWidth / 2;
-          startLoop(halfWidth);
-        });
-        return;
-      }
-      startLoop(halfWidth);
+      requestAnimationFrame(() => startLoop());
     }
 
-    function startLoop(halfWidth) {
-      let offset    = 0;
-      let prevTime  = null;
-      let isDragging = false;
-      let startX    = 0;
-      let startOffset = 0;
-      let animId    = null;
+    function startLoop() {
+      let halfWidth = track.scrollWidth / 2;
+      if (halfWidth < 10) { requestAnimationFrame(startLoop); return; }
 
-      const wrapper = track.closest('.brands-carousel-wrapper');
+      let offset = 0, prevTime = null, isDragging = false;
+      let startX = 0, startOffset = 0;
 
-      function normalizeOffset(v) {
-        // Asegura que el offset esté siempre dentro de [0, halfWidth)
+      function normalize(v) {
         const half = track.scrollWidth / 2;
         let r = v % half;
-        if (r < 0) r += half;
-        return r;
+        return r < 0 ? r + half : r;
       }
 
-      function animate(ts) {
+      function step(ts) {
         if (prevTime === null) prevTime = ts;
-        const delta = ts - prevTime;
-        prevTime = ts;
-
         if (!isDragging) {
-          offset = normalizeOffset(offset + delta * SPEED);
+          offset = normalize(offset + (ts - prevTime) * SPEED);
           track.style.transform = `translateX(-${offset}px)`;
         }
-        animId = requestAnimationFrame(animate);
+        prevTime = ts;
+        requestAnimationFrame(step);
       }
 
       function endDrag(e) {
         if (!isDragging) return;
         isDragging = false;
-        if (wrapper) wrapper.style.cursor = 'grab';
         track.style.cursor = 'grab';
-        if (e && e.pointerId != null) {
-          try { track.releasePointerCapture(e.pointerId); } catch(_) {}
-        }
+        try { track.releasePointerCapture(e.pointerId); } catch(_) {}
       }
 
       track.addEventListener('pointerdown', e => {
-        isDragging   = true;
-        startX       = e.clientX;
-        startOffset  = offset;
-        prevTime     = e.timeStamp;
-        track.setPointerCapture(e.pointerId);
-        if (wrapper) wrapper.style.cursor = 'grabbing';
-        track.style.cursor = 'grabbing';
+        isDragging = true; startX = e.clientX; startOffset = offset;
+        track.setPointerCapture(e.pointerId); track.style.cursor = 'grabbing';
       });
-
       track.addEventListener('pointermove', e => {
         if (!isDragging) return;
-        const dx = e.clientX - startX;
-        offset = normalizeOffset(startOffset - dx);
+        offset = normalize(startOffset - (e.clientX - startX));
         track.style.transform = `translateX(-${offset}px)`;
       });
-
       track.addEventListener('pointerup',     endDrag);
       track.addEventListener('pointercancel', endDrag);
 
-      animId = requestAnimationFrame(animate);
+      requestAnimationFrame(step);
     }
 
-    // FIX: Esperar a que las imágenes dentro del track carguen
     const images = Array.from(track.querySelectorAll('img'));
-    if (images.length === 0) {
-      init();
-      return;
-    }
+    if (!images.length) { init(); return; }
 
     let loaded = 0;
-    const onLoad = () => {
-      loaded++;
-      if (loaded >= images.length) init();
-    };
-
+    const onLoad = () => { if (++loaded >= images.length) init(); };
     images.forEach(img => {
-      if (img.complete) {
-        onLoad();
-      } else {
+      if (img.complete) onLoad();
+      else {
         img.addEventListener('load',  onLoad, { once: true });
-        img.addEventListener('error', onLoad, { once: true }); // igual contar errores
+        img.addEventListener('error', onLoad, { once: true });
       }
     });
   }
 
-  const clientesTrackLTR = document.getElementById('clientesCarouselTrackLTR');
-  createInfiniteCarousel(clientesTrackLTR);
+  createInfiniteCarousel(document.getElementById('clientesCarouselTrackLTR'));
 
-  /* ── 5. SCROLL REVEAL (IntersectionObserver) ──────── */
-  // FIX: Reemplazamos el polling de scroll por IntersectionObserver,
-  // que es más eficiente y no bloquea el hilo principal.
+  /* ═══════════════════════════════════════════════════
+     5. SCROLL REVEAL
+     ═══════════════════════════════════════════════════ */
   const revealEls = document.querySelectorAll('.reveal');
-  if (revealEls.length > 0) {
+  if (revealEls.length) {
     const io = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            io.unobserve(entry.target); // una vez visible, deja de observar
-          }
-        });
-      },
+      entries => entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+      }),
       { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
     );
     revealEls.forEach(el => io.observe(el));
   }
 
-  /* ── 6. CHAT WIDGET ───────────────────────────────── */
-  // FIX: Guard cuando CHAT_SEND_URL no está definido (entorno estático)
-  const sendUrl  = (typeof window.CHAT_SEND_URL  !== 'undefined') ? window.CHAT_SEND_URL  : null;
-  const resetUrl = (typeof window.CHAT_RESET_URL !== 'undefined') ? window.CHAT_RESET_URL : null;
+  /* ═══════════════════════════════════════════════════
+     6. CHAT WIDGET
+     ═══════════════════════════════════════════════════ */
+  const sendUrl  = typeof window.CHAT_SEND_URL  !== 'undefined' ? window.CHAT_SEND_URL  : null;
+  const resetUrl = typeof window.CHAT_RESET_URL !== 'undefined' ? window.CHAT_RESET_URL : null;
 
   function getCookie(name) {
     let val = null;
@@ -300,15 +329,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function timeLabel() {
     const n = new Date();
-    return String(n.getHours()).padStart(2, '0') + ':' + String(n.getMinutes()).padStart(2, '0');
+    return String(n.getHours()).padStart(2,'0') + ':' + String(n.getMinutes()).padStart(2,'0');
   }
 
   function renderMarkdown(text) {
-    // Orden importa: primero negrita, luego cursiva, luego listas
     return text
-      .replace(/\*\*(.*?)\*\*/g,   '<strong>$1</strong>')
-      .replace(/\*(.*?)\*/g,       '<em>$1</em>')
-      .replace(/^- (.+)$/gm,       '<li>$1</li>')
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g,     '<em>$1</em>')
+      .replace(/^- (.+)$/gm,     '<li>$1</li>')
       .replace(/(<li>[\s\S]*?<\/li>)/g, '<ul style="margin:6px 0 6px 16px;padding:0;list-style:disc;">$1</ul>')
       .replace(/\n{2,}/g, '<br><br>')
       .replace(/\n/g, '<br>');
@@ -326,7 +354,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function appendMessage(text, fromUser) {
     const history = document.getElementById('chat-history');
     if (!history) return;
-
     const w = document.createElement('div');
     w.className = 'msg-row';
     w.style.cssText = `display:flex;flex-direction:column;gap:3px;${fromUser ? 'align-items:flex-end;' : 'align-items:flex-start;'}`;
@@ -341,8 +368,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const history = document.getElementById('chat-history');
     if (!history || document.getElementById('typing-indicator')) return;
     const el = document.createElement('div');
-    el.id = 'typing-indicator';
-    el.className = 'msg-row';
+    el.id = 'typing-indicator'; el.className = 'msg-row';
     el.style.cssText = 'display:flex;align-items:flex-start;gap:7px;';
     el.innerHTML = `${botAvatar()}<div class="msg-bot" style="padding:10px 14px;display:flex;gap:4px;align-items:center;"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>`;
     history.appendChild(el);
@@ -358,30 +384,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const history = document.getElementById('chat-history');
     if (!history) return;
     const card = document.createElement('div');
-    card.className = 'msg-row';
-    card.style.paddingLeft = '34px';
+    card.className = 'msg-row'; card.style.paddingLeft = '34px';
     card.innerHTML = `<div class="transfer-card">
       <div class="transfer-card-title"><i class="fas fa-circle-check" style="color:#1a5fa8;"></i> Consulta transferida exitosamente</div>
       <p style="font-size:.78rem;color:#374151;margin-bottom:12px;line-height:1.5;">Un asesor recibió tu información y se pondrá en contacto contigo pronto.</p>
       <div style="display:flex;gap:8px;flex-wrap:wrap;">
         <button class="transfer-btn transfer-btn-primary" onclick="window.doResetChat()"><i class="fas fa-rotate-right"></i> Nueva consulta</button>
         <button class="transfer-btn transfer-btn-secondary" onclick="window.closeChatWindow()"><i class="fas fa-xmark"></i> Cerrar chat</button>
-      </div>
-    </div>`;
+      </div></div>`;
     history.appendChild(card);
     scrollToBottom();
   }
 
   function buildQuickReplies() {
-    const qrDiv = document.createElement('div');
-    qrDiv.id = 'quick-replies';
-    qrDiv.style.cssText = 'display:flex;flex-wrap:wrap;gap:6px;padding-left:34px;';
-    qrDiv.innerHTML = `
+    const qr = document.createElement('div');
+    qr.id = 'quick-replies'; qr.style.cssText = 'display:flex;flex-wrap:wrap;gap:6px;padding-left:34px;';
+    qr.innerHTML = `
       <button class="qr-chip" onclick="window.quickReply('¿Qué servicios ofrecen?')"><i class="fas fa-water" style="font-size:.6rem;"></i>Servicios</button>
       <button class="qr-chip" onclick="window.quickReply('Necesito estudios marinos')"><i class="fas fa-microscope" style="font-size:.6rem;"></i>Est. Marinos</button>
       <button class="qr-chip" onclick="window.quickReply('¿Cuáles son sus precios?')"><i class="fas fa-tag" style="font-size:.6rem;"></i>Precios</button>
       <button class="qr-chip" onclick="window.quickReply('¿Cómo los contacto?')"><i class="fas fa-phone" style="font-size:.6rem;"></i>Contacto</button>`;
-    return qrDiv;
+    return qr;
   }
 
   window.sendChatMessage = function(override) {
@@ -389,107 +412,86 @@ document.addEventListener('DOMContentLoaded', () => {
     const message = override || (input && input.value.trim());
     if (!message) return;
 
-    // Eliminar quick replies al primer mensaje
     const qr = document.getElementById('quick-replies');
     if (qr) qr.remove();
 
     appendMessage(message, true);
     if (!override && input) { input.value = ''; input.focus(); }
 
-    // FIX: Si no hay URL de backend (entorno estático), responder con mensaje de fallback
     if (!sendUrl) {
       showTyping();
-      setTimeout(() => {
-        hideTyping();
-        appendMessage('Gracias por tu consulta. Para hablar con un asesor, escríbenos a contacto@syagroup.cl o llámanos directamente.', false);
-      }, 800);
+      setTimeout(() => { hideTyping(); appendMessage('Gracias por tu consulta. Para hablar con un asesor, escríbenos a contacto@syagroup.cl.', false); }, 800);
       return;
     }
 
     showTyping();
     fetch(sendUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-        'X-CSRFToken': getCookie('csrftoken'),
-        'X-Requested-With': 'XMLHttpRequest',
-      },
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8', 'X-CSRFToken': getCookie('csrftoken'), 'X-Requested-With': 'XMLHttpRequest' },
       body: new URLSearchParams({ message }),
     })
-    .then(r => {
-      if (!r.ok) throw new Error(`HTTP ${r.status}`);
-      return r.json();
-    })
+    .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
     .then(data => {
       hideTyping();
       if (!data.ok) { appendMessage(data.error || 'No se pudo obtener respuesta.', false); return; }
       const reply = data.reply || '';
       appendMessage(reply, false);
-      const transferKeywords = ['conectarte con un asesor', 'asesor para finalizar', 'en breve te contactarán', 'transferido'];
-      if (transferKeywords.some(k => reply.toLowerCase().includes(k))) {
-        setTimeout(showTransferCard, 800);
-      }
+      const transferKeywords = ['conectarte con un asesor','asesor para finalizar','en breve te contactarán','transferido'];
+      if (transferKeywords.some(k => reply.toLowerCase().includes(k))) setTimeout(showTransferCard, 800);
     })
-    .catch(err => {
-      console.warn('Chat error:', err);
-      hideTyping();
-      appendMessage('Error de conexión. Inténtalo de nuevo o escríbenos a contacto@syagroup.cl', false);
-    });
+    .catch(err => { console.warn('Chat error:', err); hideTyping(); appendMessage('Error de conexión. Escríbenos a contacto@syagroup.cl', false); });
   };
 
   window.doResetChat = async function() {
     if (resetUrl) {
-      try {
-        await fetch(resetUrl, { method: 'POST', headers: { 'X-CSRFToken': getCookie('csrftoken') } });
-      } catch(e) { console.warn('Reset error:', e); }
+      try { await fetch(resetUrl, { method: 'POST', headers: { 'X-CSRFToken': getCookie('csrftoken') } }); }
+      catch(e) { console.warn('Reset error:', e); }
     }
     const history = document.getElementById('chat-history');
     if (!history) return;
     history.innerHTML = '';
-    const welcomeMsg = (typeof window.CHAT_WELCOME !== 'undefined') ? window.CHAT_WELCOME : '¡Hola! ¿En qué puedo ayudarte hoy?';
+    const welcome = typeof window.CHAT_WELCOME !== 'undefined' ? window.CHAT_WELCOME : '¡Hola! ¿En qué puedo ayudarte hoy?';
     const row = document.createElement('div');
-    row.className = 'msg-row';
-    row.style.cssText = 'display:flex;align-items:flex-start;gap:8px;';
-    row.innerHTML = `${botAvatar()}<div><div class="msg-bot">${welcomeMsg}</div><p class="msg-time" style="padding-left:3px;">Ahora mismo</p></div>`;
+    row.className = 'msg-row'; row.style.cssText = 'display:flex;align-items:flex-start;gap:8px;';
+    row.innerHTML = `${botAvatar()}<div><div class="msg-bot">${welcome}</div><p class="msg-time" style="padding-left:3px;">Ahora mismo</p></div>`;
     history.appendChild(row);
     history.appendChild(buildQuickReplies());
     scrollToBottom();
   };
 
-  function updateChatFullscreenState(isFull) {
-    const cw        = document.getElementById('chat-window');
-    const toggleBtn = document.getElementById('toggle-fullscreen');
-    if (!cw || !toggleBtn) return;
+  function setChatFullscreen(isFull) {
+    const cw = document.getElementById('chat-window');
+    const btn = document.getElementById('toggle-fullscreen');
+    if (!cw || !btn) return;
     cw.classList.toggle('fullscreen', isFull);
-    const icon = toggleBtn.querySelector('i');
+    const icon = btn.querySelector('i');
     if (icon) icon.className = isFull ? 'fas fa-compress' : 'fas fa-expand';
-    toggleBtn.title = isFull ? 'Restaurar tamaño' : 'Ampliar chat';
+    btn.title = isFull ? 'Restaurar tamaño' : 'Ampliar chat';
     document.body.classList.toggle('chat-fullscreen', isFull);
   }
 
   window.toggleChatFullscreen = () => {
     const cw = document.getElementById('chat-window');
-    if (cw) updateChatFullscreenState(!cw.classList.contains('fullscreen'));
+    if (cw) setChatFullscreen(!cw.classList.contains('fullscreen'));
   };
 
   window.closeChatWindow = () => {
-    updateChatFullscreenState(false);
-    const cw  = document.getElementById('chat-window'); if (cw)  cw.classList.add('hidden');
-    const ico = document.getElementById('chat-icon-open');  if (ico) ico.style.display = 'block';
-    const icx = document.getElementById('chat-icon-close'); if (icx) icx.style.display = 'none';
+    setChatFullscreen(false);
+    const cw = document.getElementById('chat-window'); if (cw) cw.classList.add('hidden');
+    const io = document.getElementById('chat-icon-open');  if (io) io.style.display = 'block';
+    const ix = document.getElementById('chat-icon-close'); if (ix) ix.style.display = 'none';
   };
 
   window.openChat = () => {
     const cw  = document.getElementById('chat-window'); if (cw)  cw.classList.remove('hidden');
     const cta = document.getElementById('chat-cta');   if (cta) cta.classList.add('hidden');
-    const ico = document.getElementById('chat-icon-open');  if (ico) ico.style.display = 'none';
-    const icx = document.getElementById('chat-icon-close'); if (icx) icx.style.display = 'block';
+    const io  = document.getElementById('chat-icon-open');  if (io) io.style.display = 'none';
+    const ix  = document.getElementById('chat-icon-close'); if (ix) ix.style.display = 'block';
     const inp = document.getElementById('chat-input'); if (inp) inp.focus();
   };
 
   window.quickReply = text => window.sendChatMessage(text);
 
-  /* Conectar elementos del chat */
   const chatBtn       = document.getElementById('chat-button');
   const chatWin       = document.getElementById('chat-window');
   const closeBtn      = document.getElementById('close-chat');
@@ -498,26 +500,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const sendBtn       = document.getElementById('chat-send');
   const chatInput     = document.getElementById('chat-input');
 
-  if (chatBtn) {
-    chatBtn.addEventListener('click', () => {
-      chatWin && chatWin.classList.contains('hidden') ? window.openChat() : window.closeChatWindow();
-    });
-  }
+  if (chatBtn)       chatBtn.addEventListener('click', () => chatWin?.classList.contains('hidden') ? window.openChat() : window.closeChatWindow());
   if (fullscreenBtn) fullscreenBtn.addEventListener('click', window.toggleChatFullscreen);
-  if (closeBtn)      closeBtn.addEventListener('click',      window.closeChatWindow);
-  if (resetBtn)      resetBtn.addEventListener('click',      window.doResetChat);
-  if (sendBtn)       sendBtn.addEventListener('click',       () => window.sendChatMessage());
-  if (chatInput) {
-    chatInput.addEventListener('keydown', e => {
-      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); window.sendChatMessage(); }
-    });
-  }
+  if (closeBtn)      closeBtn.addEventListener('click', window.closeChatWindow);
+  if (resetBtn)      resetBtn.addEventListener('click', window.doResetChat);
+  if (sendBtn)       sendBtn.addEventListener('click', () => window.sendChatMessage());
+  if (chatInput)     chatInput.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); window.sendChatMessage(); } });
 
-  /* ── 7. MODAL CERTIFICADOS ────────────────────────── */
-  // Estas funciones se exponen globalmente para que el onclick del HTML funcione
+  /* ═══════════════════════════════════════════════════
+     7. MODAL CERTIFICADOS
+     ═══════════════════════════════════════════════════ */
   window.openCertModal = function(url, title) {
-    const modal = document.getElementById('cert-modal');
-    if (!modal) return;
+    const modal = document.getElementById('cert-modal'); if (!modal) return;
     document.getElementById('cert-modal-title').textContent = title;
     document.getElementById('cert-modal-frame').src = url;
     document.getElementById('cert-modal-dl').href = url;
@@ -526,15 +520,12 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   window.closeCertModal = function() {
-    const modal = document.getElementById('cert-modal');
-    if (!modal) return;
+    const modal = document.getElementById('cert-modal'); if (!modal) return;
     modal.classList.remove('active');
     document.getElementById('cert-modal-frame').src = '';
     document.body.style.overflow = '';
   };
 
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') window.closeCertModal();
-  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') window.closeCertModal(); });
 
 }); // END DOMContentLoaded

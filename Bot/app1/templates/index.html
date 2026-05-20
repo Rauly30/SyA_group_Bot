@@ -4,10 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SyA Group · Sangüesa y Asociados Chile</title>
-
+  <title>SyA Group</title>
   {% tailwind_css %}
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Serif:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet">
@@ -15,6 +13,8 @@
   <link rel="stylesheet" href="{% static 'css/main.css' %}">
 </head>
 <body>
+
+<!-- ══ NAVBAR ══════════════════════════════════════════ -->
 <nav id="navbar">
   <div class="nav-inner">
     <a href="#" class="logo">
@@ -44,9 +44,7 @@
   </div>
 </nav>
 
-<!-- ═══════════════════════════════════════════════════
-     HERO CAROUSEL
-     ═══════════════════════════════════════════════════ -->
+<!-- ══ HERO CAROUSEL ═══════════════════════════════════ -->
 <section class="hero">
   <div class="carousel" id="carousel">
     <div class="c-track" id="cTrack">
@@ -158,12 +156,10 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════
-     SERVICIOS — con fondo topo azul
-     ═══════════════════════════════════════════════════ -->
+<!-- ══ SERVICIOS ════════════════════════════════════════ -->
 <section id="servicios" class="services-section">
-  <!-- Topographic background SVG -->
-  <div class="topo-canvas topo-light topo-animated" aria-hidden="true" id="topoServices"></div>
+  <!-- Relieve topográfico claro animado -->
+  <div class="topo-canvas topo-light topo-animated" aria-hidden="true"></div>
 
   <div class="section-inner" style="position:relative;z-index:1;">
     <div class="services-header reveal">
@@ -171,9 +167,7 @@
         <div class="section-label">Qué hacemos</div>
         <h2>Portafolio de<br>servicios técnicos.</h2>
       </div>
-      <p class="services-lead">
-        Seis disciplinas especializadas que cubren el ciclo completo de evaluación, monitoreo y gestión ambiental en ecosistemas marinos, costeros y terrestres a lo largo de Chile.
-      </p>
+      <p class="services-lead">Seis disciplinas especializadas que cubren el ciclo completo de evaluación, monitoreo y gestión ambiental en ecosistemas marinos, costeros y terrestres a lo largo de Chile.</p>
     </div>
 
     <div class="services-grid">
@@ -184,7 +178,6 @@
         <p class="svc-desc">Vigilancia biológica y ecológica de ambientes marinos en conformidad con estándares internacionales y cumplimiento de RCA (Ley 19.300). Incorporamos metodologías del MMA, DIRECTEMAR, SERNAPESCA y SUBPESCA.</p>
         <div class="svc-arrow">Ver más <i class="fas fa-arrow-right"></i></div>
       </div>
-
       <div class="svc-card reveal reveal-delay-2">
         <div class="svc-icon" style="background:rgba(14,165,233,.09);"><i class="fas fa-flask" style="color:#0284C7;font-size:.95rem;"></i></div>
         <span class="svc-tag" style="background:rgba(14,165,233,.09);color:#0284C7;">LAB</span>
@@ -192,7 +185,6 @@
         <p class="svc-desc">Contamos con instalaciones y equipos especializados para el análisis técnico-científico de comunidades bentónicas submareales e intermareales, fitoplancton y zooplancton en agua dulce y salada.</p>
         <div class="svc-arrow">Ver más <i class="fas fa-arrow-right"></i></div>
       </div>
-
       <div class="svc-card reveal reveal-delay-3">
         <div class="svc-icon" style="background:rgba(8,45,102,.1);"><i class="fas fa-person-swimming" style="color:#082D66;font-size:.95rem;"></i></div>
         <span class="svc-tag" style="background:rgba(8,45,102,.09);color:#082D66;">OPS</span>
@@ -200,7 +192,6 @@
         <p class="svc-desc">Servicios subacuáticos de alta tecnología para buques, puertos y boyas. Contamos con el sistema NDT/MPI —único en Chile— para detección de grietas, fugas y defectos de soldaduras en estructuras metálicas subacuáticas.</p>
         <div class="svc-arrow">Ver más <i class="fas fa-arrow-right"></i></div>
       </div>
-
       <div class="svc-card reveal reveal-delay-1">
         <div class="svc-icon" style="background:rgba(18,73,160,.07);"><i class="fas fa-tree" style="color:#3B6EC4;font-size:.95rem;"></i></div>
         <span class="svc-tag" style="background:rgba(18,73,160,.07);color:#3B6EC4;">ETD</span>
@@ -208,7 +199,6 @@
         <p class="svc-desc">Estudios del biota y ecosistemas continentales orientados a su conservación y producción, con metodologías actualizadas según la institucionalidad ambiental chilena vigente.</p>
         <div class="svc-arrow">Ver más <i class="fas fa-arrow-right"></i></div>
       </div>
-
       <div class="svc-card reveal reveal-delay-2">
         <div class="svc-icon" style="background:rgba(99,102,241,.08);"><i class="fas fa-file-contract" style="color:#4338CA;font-size:.95rem;"></i></div>
         <span class="svc-tag" style="background:rgba(99,102,241,.08);color:#4338CA;">GAP</span>
@@ -216,7 +206,6 @@
         <p class="svc-desc">Facilitamos la identificación de normativa ambiental y permisos sectoriales aplicables, en concordancia con la Ley N° 19.300 sobre Bases Generales del Medio Ambiente y el SEIA.</p>
         <div class="svc-arrow">Ver más <i class="fas fa-arrow-right"></i></div>
       </div>
-
       <div class="svc-card reveal reveal-delay-3">
         <div class="svc-icon" style="background:rgba(230,126,34,.08);"><i class="fas fa-recycle" style="color:#B45309;font-size:.95rem;"></i></div>
         <span class="svc-tag" style="background:rgba(230,126,34,.08);color:#B45309;">ORL</span>
@@ -228,12 +217,12 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════
-     CTA TOPO — Conversa con nuestros asesores (tras servicios)
+<!-- ══ CTA 1 — Naranja con imagen de fondo + topo ══════
+     Cambiar --cta-bg-img a la foto que prefieras.
+     Si no tienes foto, elimina el style y queda solo con gradiente naranja.
      ═══════════════════════════════════════════════════ -->
-<section class="topo-cta-strip">
-  <!-- topographic relief background in warm orange tones -->
-  <div class="topo-cta-bg" aria-hidden="true" id="topoCtaWarm"></div>
+<section class="topo-cta-strip bg-degrade--light"
+         style="--cta-bg-img: url('{% static 'img/fondo.jpg' %}');">
 
   <div class="topo-cta-inner">
     <div class="topo-cta-left">
@@ -253,12 +242,9 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════
-     NOSOTROS — con fondo topo suave
-     ═══════════════════════════════════════════════════ -->
+<!-- ══ NOSOTROS ══════════════════════════════════════════ -->
 <section id="nosotros" class="about-section">
-  <!-- subtle topographic relief over light background -->
-  <div class="topo-canvas topo-light" aria-hidden="true" id="topoAbout" style="opacity:.07;"></div>
+  <div class="topo-canvas topo-light" aria-hidden="true" style="opacity:.07;"></div>
 
   <div class="section-inner about-inner">
     <div class="about-text reveal">
@@ -317,13 +303,10 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════
-     EQUIPO — con fondo topo azul suave
-     ═══════════════════════════════════════════════════ -->
+<!-- ══ EQUIPO ════════════════════════════════════════════ -->
 <section id="equipo" class="team-section">
   <div class="team-accent-line"></div>
-  <!-- topographic background for team section -->
-  <div class="topo-canvas topo-light topo-animated" aria-hidden="true" id="topoTeam"></div>
+  <div class="topo-canvas topo-light topo-animated" aria-hidden="true"></div>
 
   <div class="section-inner team-inner">
     <div class="team-eyebrow"><span class="team-eyebrow-rule"></span>Nuestra gente</div>
@@ -331,6 +314,7 @@
       <h2>El equipo detrás<br>de cada proyecto.</h2>
       <p class="team-head-sub">Biólogos marinos, oceanógrafos, ingenieros, químicos y gestores ambientales con trayectoria en el sector público y privado chileno desde 2003.</p>
     </div>
+
     <div class="lead-grid">
       <div class="lead-card lead-card--prime reveal">
         <span class="founder-pill">Fundador</span>
@@ -377,6 +361,7 @@
         <div class="chip-row"><span class="chip">ISO 17020</span><span class="chip">SEIA</span><span class="chip">ETFA</span></div>
       </div>
     </div>
+
     <div class="spec-hd">
       <span class="spec-hd-label">Especialistas técnicos</span>
       <div class="spec-hd-rule"></div>
@@ -403,6 +388,7 @@
         <p class="spec-desc">Tramitación de permisos sectoriales, SEIA (DIA/EIA), auditorías y cumplimiento regulatorio integral ante OAECA.</p>
       </div>
     </div>
+
     <div class="team-stats-row">
       <div class="team-stat reveal"><p class="team-stat-n">+20 <span>años</span></p><p class="team-stat-lbl">de experiencia técnica continua</p></div>
       <div class="team-stat reveal reveal-delay-1"><p class="team-stat-n">3</p><p class="team-stat-lbl">regiones con presencia directa</p></div>
@@ -412,15 +398,14 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════
-     EXPERIENCIA — con fondo topo parchment
-     ═══════════════════════════════════════════════════ -->
+<!-- ══ EXPERIENCIA ════════════════════════════════════════ -->
 <section id="experiencia" class="exp-section">
-  <div class="topo-canvas topo-warm topo-animated" aria-hidden="true" id="topoExp"></div>
+  <div class="topo-canvas topo-warm topo-animated" aria-hidden="true"></div>
 
   <div class="section-inner">
     <div class="section-label" style="justify-content:center;">Nuestra experiencia</div>
     <h2 class="reveal">Proyectos que<br>dejan huella.</h2>
+
     <div class="exp-grid">
       <div class="exp-card reveal reveal-delay-1">
         <span class="exp-card-tag">Sector Energético · PVA</span>
@@ -447,116 +432,37 @@
         <span class="exp-client"><i class="fas fa-anchor"></i>Puerto de Arica · Puerto de Antofagasta</span>
       </div>
     </div>
+
     <div class="clients-row">
       <p class="clients-label">Clientes y organismos con quienes hemos trabajado</p>
-      <div class="brands-carousel-wrapper" data-aos="fade-up">
-            <div class="brands-carousel-container">
-                <div class="brands-carousel-track brands-carousel-ltr" id="clientesCarouselTrackLTR">
-                    <!-- Cliente 1 -->
-                    <div class="brand-carousel-item cliente-item">
-                        <div class="cliente-card">
-                            <div class="cliente-logo-wrapper">
-                                <img src="{% static 'img/1.jpg' %}" alt="Cliente 1" class="brand-logo" loading="lazy">
-                            </div>
-                        </div>
-                    </div>
- 
-                    <!-- Cliente 2 -->
-                    <div class="brand-carousel-item cliente-item">
-                        <div class="cliente-card">
-                            <div class="cliente-logo-wrapper">
-                                <img src="{% static 'img/2.jpg' %}" alt="Cliente 2" class="brand-logo" loading="lazy">
-                            </div>
-                        </div>
-                    </div>
- 
-                    <!-- Cliente 3 -->
-                    <div class="brand-carousel-item cliente-item">
-                        <div class="cliente-card">
-                            <div class="cliente-logo-wrapper">
-                                <img src="{% static 'img/3.jpg' %}" alt="Cliente 3" class="brand-logo" loading="lazy">
-                            </div>
-                        </div>
-                    </div>
- 
-                    <!-- Cliente 4 -->
-                    <div class="brand-carousel-item cliente-item">
-                        <div class="cliente-card">
-                            <div class="cliente-logo-wrapper">
-                                <img src="{% static 'img/4.jpg' %}" alt="Cliente 4" class="brand-logo" loading="lazy">
-                            </div>
-                        </div>
-                    </div>
- 
-                    <!-- Cliente 5 -->
-                    <div class="brand-carousel-item cliente-item">
-                        <div class="cliente-card">
-                            <div class="cliente-logo-wrapper">
-                                <img src="{% static 'img/5.jpg' %}" alt="Cliente 5" class="brand-logo" loading="lazy">
-                            </div>
-                        </div>
-                    </div>
- 
-                    <!-- Cliente 6 -->
-                    <div class="brand-carousel-item cliente-item">
-                        <div class="cliente-card">
-                            <div class="cliente-logo-wrapper">
-                                <img src="{% static 'img/6.jpg' %}" alt="Cliente 6" class="brand-logo" loading="lazy">
-                            </div>
-                        </div>
-                    </div>
- 
-                    <!-- Cliente 7 -->
-                    <div class="brand-carousel-item cliente-item">
-                        <div class="cliente-card">
-                            <div class="cliente-logo-wrapper">
-                                <img src="{% static 'img/7.jpg' %}" alt="Cliente 7" class="brand-logo" loading="lazy">
-                            </div>
-                        </div>
-                    </div>
- 
-                    <!-- Cliente 8 -->
-                    <div class="brand-carousel-item cliente-item">
-                        <div class="cliente-card">
-                            <div class="cliente-logo-wrapper">
-                                <img src="{% static 'img/8.jpg' %}" alt="Cliente 8" class="brand-logo" loading="lazy">
-                            </div>
-                        </div>
-                    </div>
- 
-                    <!-- Cliente 9 -->
-                    <div class="brand-carousel-item cliente-item">
-                        <div class="cliente-card">
-                            <div class="cliente-logo-wrapper">
-                                <img src="{% static 'img/9.jpg' %}" alt="Cliente 9" class="brand-logo" loading="lazy">
-                            </div>
-                        </div>
-                    </div>
- 
-                    <!-- Cliente 10 -->
-                    <div class="brand-carousel-item cliente-item">
-                        <div class="cliente-card">
-                            <div class="cliente-logo-wrapper">
-                                <img src="{% static 'img/10.jpg' %}" alt="Cliente 10" class="brand-logo" loading="lazy">
-                            </div>                         
-                        </div>
-                    </div>
- 
+      <div class="brands-carousel-wrapper">
+        <div class="brands-carousel-container">
+          <div class="brands-carousel-track" id="clientesCarouselTrackLTR">
+            {% for i in "1234567890"|make_list %}
+            <div class="brand-carousel-item cliente-item">
+              <div class="cliente-card">
+                <div class="cliente-logo-wrapper">
+                  <img src="{% static 'img/'|add:forloop.counter|add:'.jpg' %}" alt="Cliente {{ forloop.counter }}" class="brand-logo" loading="lazy">
                 </div>
+              </div>
             </div>
-        </div>  
+            {% endfor %}
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════
-     CTA TOPO 2 — antes de certificaciones
-     ═══════════════════════════════════════════════════ -->
-<section class="topo-cta-strip" style="background:linear-gradient(108deg,var(--brand-blue3) 0%,var(--brand-blue2) 100%);">
-  <div class="topo-cta-bg" aria-hidden="true" id="topoCtaBlue"></div>
+<!-- ══ CTA 2 — Azul profundo con imagen + topo ══════════
+     Foto de fondo diferente, variante azul.
+     ════════════════════════════════════════════════════ -->
+<section class="topo-cta-strip topo-cta-strip--dark bg-degrade" 
+         style="--cta-bg-img: url('{% static 'img/fondo-black.jpg' %}');">
+
   <div class="topo-cta-inner">
     <div class="topo-cta-left">
-      <div class="topo-cta-overline" style="--before-bg:rgba(255,255,255,.3);">Asesoría sin costo</div>
+      <div class="topo-cta-overline">Asesoría sin costo</div>
       <h2 class="topo-cta-title">Conversemos sobre<br>tu caso ambiental</h2>
       <p class="topo-cta-desc">Desde permisos sectoriales hasta monitoreos de RCA — nuestros especialistas te orientan desde el primer contacto. Sin burocracia, sin rodeos.</p>
     </div>
@@ -572,27 +478,22 @@
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════
-     CERTIFICACIONES — fondo oscuro con topo
-     ═══════════════════════════════════════════════════ -->
-<section id="certificaciones" class="cert-full-section">
+<!-- ══ CERTIFICACIONES ════════════════════════════════════ -->
+<section id="certificaciones" class="topo-cta-strip topo-cta-strip--dark bg-degrade" style="--cta-bg-img: url('{% static 'img/fondo-black.jpg' %}');">
   <div class="cert-bg-shape cert-bg-shape--1"></div>
   <div class="cert-bg-shape cert-bg-shape--2"></div>
-  <!-- topographic overlay on dark background -->
-  <div class="topo-canvas topo-dark topo-animated" aria-hidden="true" id="topoCert"></div>
+  <div class="topo-canvas topo-dark topo-animated" aria-hidden="true"></div>
 
   <div class="section-inner cert-full-inner">
     <div class="cert-full-header reveal">
       <div class="cert-full-eyebrow"><span class="cert-eyebrow-dot"></span>Acreditaciones oficiales · ETFA</div>
       <h2>La experiencia y calidad<br>de nuestro servicio es<br>nuestro respaldo.</h2>
-      <p class="cert-full-lead">
-        Acreditados por la Superintendencia del Medio Ambiente (SMA) como Entidad Técnica de Fiscalización Ambiental (ETFA) — Resolución Exenta N° 741/2023 — con certificaciones nacionales e internacionales que avalan la rigurosidad técnica y la validez legal de cada uno de nuestros entregables.
-      </p>
+      <p class="cert-full-lead">Acreditados por la Superintendencia del Medio Ambiente (SMA) como Entidad Técnica de Fiscalización Ambiental (ETFA) — Resolución Exenta N° 741/2023 — con certificaciones nacionales e internacionales que avalan la rigurosidad técnica y la validez legal de cada uno de nuestros entregables.</p>
     </div>
+
     <div style="background:rgba(18,73,160,0.08);border:1px solid rgba(18,73,160,0.22);border-radius:16px;padding:24px 28px;margin-bottom:40px;" class="reveal">
       <p style="font-size:.65rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:16px;">
-        <i class="fas fa-flask" style="color:var(--brand-accent);margin-right:6px;"></i>
-        Alcances de muestreo y medición ETFA
+        <i class="fas fa-flask" style="color:var(--brand-accent);margin-right:6px;"></i>Alcances de muestreo y medición ETFA
       </p>
       <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
         <div style="background:rgba(255,255,255,0.04);border-radius:10px;padding:16px;">
@@ -615,10 +516,11 @@
         </div>
       </div>
     </div>
+
     <div class="cert-docs-grid">
       <div class="cert-doc-card reveal reveal-delay-1" onclick="openCertModal('{% static 'pdf/Certificado-OI-216-17020.pdf' %}', 'Certificación OI 216 · ISO 17020')">
         <div class="cert-doc-preview">
-          <iframe class="cert-pdf-thumb" src="{% static 'pdf/Certificado-OI-216-17020.pdf' %}#toolbar=0&navpanes=0&scrollbar=0&view=FitH&zoom=80" title="Vista previa Certificación OI 216 17020" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+          <iframe class="cert-pdf-thumb" src="{% static 'pdf/Certificado-OI-216-17020.pdf' %}#toolbar=0&navpanes=0&scrollbar=0&view=FitH&zoom=80" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
           <div class="cert-doc-overlay"><i class="fas fa-expand-alt"></i><span>Ver certificado</span></div>
           <div class="cert-doc-stamp cert-doc-stamp--inn"><span>INN</span></div>
         </div>
@@ -672,6 +574,7 @@
   </div>
 </section>
 
+<!-- Modal certificados -->
 <div id="cert-modal" class="cert-modal" onclick="closeCertModal()">
   <div class="cert-modal-box" onclick="event.stopPropagation()">
     <div class="cert-modal-header">
@@ -685,12 +588,10 @@
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════
-     SEDES — fondo oscuro con topo
-     ═══════════════════════════════════════════════════ -->
-<section id="sedes" class="geo-section">
+<!-- ══ SEDES ══════════════════════════════════════════════ -->
+<section id="sedes" class="geo-section topo-cta-strip topo-cta-strip--dark bg-degrade"
+         style="--cta-bg-img: url('{% static 'img/fondo-black.jpg' %}');">
   <div class="geo-glow"></div>
-  <div class="topo-canvas topo-dark topo-animated" aria-hidden="true" id="topoGeo"></div>
 
   <div class="geo-inner">
     <div class="geo-header reveal">
@@ -702,40 +603,32 @@
         <span class="geo-tag">Casa Matriz</span>
         <p class="geo-title">Región de Valparaíso</p>
         <p class="geo-addr">Los Molinos N° 747<br>Quilpué, Región de Valparaíso<br><br>
-          <span style="color:rgba(255,255,255,.22);font-size:.73rem;">Oficina principal · Atención general</span>
-        </p>
+          <span style="color:rgba(255,255,255,.22);font-size:.73rem;">Oficina principal · Atención general</span></p>
       </div>
       <div class="geo-card reveal reveal-delay-2">
         <span class="geo-tag">Zona Norte</span>
         <p class="geo-title">Región de Antofagasta</p>
         <p class="geo-addr">Contacto técnico en la zona norte<br>II Región, Chile<br><br>
-          <span style="color:rgba(255,255,255,.22);font-size:.73rem;">Soporte a proyectos mineros y portuarios</span>
-        </p>
+          <span style="color:rgba(255,255,255,.22);font-size:.73rem;">Soporte a proyectos mineros y portuarios</span></p>
       </div>
       <div class="geo-card reveal reveal-delay-3">
         <span class="geo-tag">Norte Grande</span>
         <p class="geo-title">Región de Tarapacá</p>
         <p class="geo-addr">Edificio Darma<br>Iquique, I Región de Tarapacá<br><br>
-          <span style="color:rgba(255,255,255,.22);font-size:.73rem;">Operaciones en zona altiplánica y costera</span>
-        </p>
+          <span style="color:rgba(255,255,255,.22);font-size:.73rem;">Operaciones en zona altiplánica y costera</span></p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════
-     CONTACTO — con fondo topo suave y CTA chat
-     ═══════════════════════════════════════════════════ -->
-<section id="contacto" class="cta-block">
-  <!-- Subtle topo on light contact section -->
-  <div class="topo-canvas topo-light" aria-hidden="true" id="topoContact" style="opacity:.06;"></div>
-
+<!-- ══ CONTACTO ════════════════════════════════════════════ -->
+<section id="contacto" class="cta-block bg-degrade bg-degrade--light">
+  <div class="topo-canvas topo-light" aria-hidden="true" style="opacity:.06;"></div>
   <div class="cta-inner">
     <div class="section-eyebrow" style="justify-content:center;">Contacto</div>
     <h2 class="reveal">¿Tienes un proyecto<br>ambiental en mente?</h2>
     <p class="reveal reveal-delay-1">Cuéntanos tu caso. Un especialista de SyA Group revisará tu situación y te contactará sin costo ni compromiso. Atendemos todo el territorio nacional.</p>
     <div class="cta-buttons reveal reveal-delay-2">
-      <!-- Primary: abre el chatbot -->
       <button class="btn-cta-warm" onclick="window.openChat()">
         <i class="fas fa-comment-dots" style="font-size:.88rem;"></i>
         Conversa con nuestros asesores
@@ -746,6 +639,7 @@
   </div>
 </section>
 
+<!-- ══ FOOTER ══════════════════════════════════════════════ -->
 <footer>
   <div class="footer-inner">
     <div class="footer-top">
@@ -802,7 +696,7 @@
   </div>
 </footer>
 
-<!-- ═══ CHAT WIDGET ════════════════════════════════════ -->
+<!-- ══ CHAT WIDGET ══════════════════════════════════════════ -->
 <div id="chat-widget">
   <div id="chat-cta" onclick="openChat()">
     <div style="width:34px;height:34px;border-radius:9px;background:var(--brand-blue);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
@@ -815,14 +709,14 @@
     <button onclick="event.stopPropagation(); document.getElementById('chat-cta').classList.add('hidden');"
             style="background:none;border:none;color:var(--ink-ghost);cursor:pointer;font-size:.95rem;padding:2px;margin-left:2px;">&times;</button>
   </div>
+
   <div id="chat-window" class="hidden">
     <div class="chat-header">
       <div style="display:flex;align-items:center;gap:10px;flex:1;">
         <div>
           <p style="font-family:var(--font-sans);font-size:.84rem;font-weight:600;color:#fff;margin:0 0 1px;">Asesor SyA Group</p>
           <p style="font-family:var(--font-sans);font-size:.67rem;color:rgba(255,255,255,.6);margin:0;display:flex;align-items:center;gap:4px;">
-            <span style="width:5px;height:5px;background:var(--brand-accent);border-radius:50%;display:inline-block;"></span>
-            En línea
+            <span style="width:5px;height:5px;background:var(--brand-accent);border-radius:50%;display:inline-block;"></span>En línea
           </p>
         </div>
       </div>
@@ -859,6 +753,7 @@
       <p class="chat-powered">Powered by SyA Group</p>
     </div>
   </div>
+
   <div id="chat-button">
     <i id="chat-icon-open" class="fas fa-comment-dots" style="color:#fff;font-size:.95rem;"></i>
     <i id="chat-icon-close" class="fas fa-xmark" style="color:#fff;font-size:.9rem;display:none;"></i>
@@ -869,20 +764,6 @@
   window.CHAT_SEND_URL  = '{% url "public_chat" %}';
   window.CHAT_RESET_URL = '{% url "reset_chat" %}';
   window.CHAT_WELCOME   = '{{ mensaje_bienvenida|default:"¡Hola de nuevo! ¿En qué puedo ayudarte hoy?"|escapejs }}';
-
-  function openCertModal(url, title) {
-    document.getElementById('cert-modal-title').textContent = title;
-    document.getElementById('cert-modal-frame').src = url;
-    document.getElementById('cert-modal-dl').href = url;
-    document.getElementById('cert-modal').classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeCertModal() {
-    document.getElementById('cert-modal').classList.remove('active');
-    document.getElementById('cert-modal-frame').src = '';
-    document.body.style.overflow = '';
-  }
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCertModal(); });
 </script>
 <script src="{% static 'js/main.js' %}"></script>
 </body>
